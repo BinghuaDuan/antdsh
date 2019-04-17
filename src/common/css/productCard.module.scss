@@ -1,0 +1,45 @@
+.card {
+  display: block;
+  padding: 40px 34px;
+  margin-right: 10px;
+  background: #fff;
+
+  transition-property: box-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.2);
+}
+.cardImg {
+  width: 100%;
+  padding: 0 0 20px;
+  img {
+    margin: 0 auto;
+    display: block;
+    width: 75px;
+    min-height: 46.6px;
+  }
+}
+
+.cardTitle {
+  opacity: 8;
+  font-size: 18px;
+  color: #000;
+  line-height: 26px;
+  text-align: center;
+  margin-bottom: 10px;
+  height: 26px;
+  overflow: hidden;
+}
+.cardDesc {
+  opacity: 0.45;
+  font-size: 14px;
+  color: #000;
+  line-height: 24px;
+  text-align: center;
+  height: 48px;
+  overflow: hidden;
+}

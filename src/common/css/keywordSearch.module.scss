@@ -1,0 +1,39 @@
+$backgroundColor: #f5f5f5;
+$borderBottomColor: #d2d2d2;
+
+li {
+  list-style: none;
+}
+
+.resultListTop {
+  background: $backgroundColor;
+  border-bottom: 1px solid $borderBottomColor;
+  dd {
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+}
+
+.resultList {
+  
+}
+
+.resultItem {
+  border-bottom: 1px solid $borderBottomColor;
+  padding: 20px 55px;
+}
+
+.attrFirstItem {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.attrItem {
+  text-align: left;
+  padding-bottom: 10px;
+}
+.attrMore {
+  text-align: right;
+}
+

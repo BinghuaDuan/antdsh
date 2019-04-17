@@ -1,0 +1,124 @@
+$cardmargin: 20px;
+
+.card {
+  background: #fff;
+  border: 1px solid #ebebeb;
+  padding: 20px 20px 20px 20px;
+  margin-bottom: $cardmargin;
+}
+
+.content {
+  width: 65%;
+  float: left;
+}
+.sidebar {
+  width: 35%;
+  float: right;
+  padding-left: $cardmargin;
+  .detailRelated {
+    h2 {
+      font-size: 12px;
+      line-height: 22px;
+      color: #000;
+      font-weight: 700;
+    }
+    .detailRelatedItem {
+      padding: 20px 0 25px;
+      .detailRelatedImg {
+        float: left;
+        margin-right: 20px;
+        width: 100px;
+        height: 75px;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+      .detailRelatedText {
+        h3 {
+          font-size: 12px;
+          line-height: 22px;
+          padding: 4px 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          a {
+            color: #000;
+            text-decoration: none;
+          }
+        }
+        p {
+          font-size: 12px;
+          color: #666;
+          line-height: 20px;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+.detailHeader {
+  padding: 0;
+  min-height: 150px;
+  .detailHeaderImg {
+    float: left;
+    width: 18%;
+    height: 112px;
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .detailHeaderText {
+    float: left;
+    margin-left: 3%;
+    width: 79%;
+    h1 {
+      font-size: 16px;
+      line-height: 26px;
+      font-weight: 400;
+      color: #000;
+    }
+  }
+}
+.detailIntroduce {
+  padding: 22px 40px 0;
+  section {
+    display: block;
+    h2 {
+      font-size: 14px;
+      line-height: 28px;
+      padding: 0 0 11px 9px;
+      color: #000;
+      font-weight: 700;
+      border-bottom: 1px solid #ebebeb;
+    }
+    .detailIntroduceBox {
+      padding: 20px 0;
+      overflow: hidden;
+      ul {
+        list-style: none;
+        li {
+          font-size: 12px;
+          line-height: 28px;
+          label {
+            color: #000;
+            float: left;
+            width: 120px;
+          }
+          span {
+            color: #666;
+          }
+        }
+      }
+      img {
+        max-width: 550px;
+        max-height: inherit;
+      }
+    }
+  }
+}

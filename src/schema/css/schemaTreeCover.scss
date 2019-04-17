@@ -1,0 +1,17 @@
+$treeFontSize: 18px;
+$treeElementHeight: 40px;
+
+.ant-tree {
+  font-size: $treeFontSize;
+
+}
+
+.ant-tree li span.ant-tree-switcher {
+  height: $treeElementHeight;
+  line-height: $treeElementHeight;
+}
+
+.ant-tree li .ant-tree-node-content-wrapper {
+  height: $treeElementHeight;
+  line-height: $treeElementHeight;
+}
