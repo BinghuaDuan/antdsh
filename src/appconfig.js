@@ -12,14 +12,12 @@ appconfig.dev = {
 };
 
 appconfig.prod = {
-  prod: {
-    defaultServer: {
-      host: 'http://localhost:18080',
-    },
-    dbhServer: {
-      host: 'http://dbh.brianxkliu.xyz',
-    },
-  }
+  defaultServer: {
+    host: 'http://localhost:18080',
+  },
+  dbhServer: {
+    host: 'http://localhost:8085',
+  },
 };
 
 export default appconfig[env]
