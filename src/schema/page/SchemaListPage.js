@@ -6,7 +6,7 @@ import schemaService from '../service/SchemaService';
 import RESULT from "../../common/constant/Result";
 import SCHEMA_CONST from "../constant/SchemaConstant";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 class SchemaInfoTabel extends Component {
 

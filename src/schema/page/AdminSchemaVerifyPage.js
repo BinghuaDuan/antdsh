@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb, Input, Button, message, Table } from 'antd';
+import { Layout, Breadcrumb, Button, message, Table } from 'antd';
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
 import SchemaTree from '../component/SchemaTree';
@@ -7,10 +7,9 @@ import schemaService from '../service/SchemaService';
 import adminSchemaService from '../service/AdminSchemaService';
 import RESULT from '../../common/constant/Result';
 import querystring from 'querystring';
-import mainPageService from "../../common/service/mainPageService";
 import SCHEMA_CONST from "../constant/SchemaConstant";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 /**
  * props: {

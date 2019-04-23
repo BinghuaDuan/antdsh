@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb, Input, Button, message } from 'antd';
+import { Layout, Breadcrumb, Button, message } from 'antd';
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
 import SchemaTree from '../component/SchemaTree';
@@ -8,7 +8,7 @@ import RESULT from '../../common/constant/Result';
 import querystring from 'querystring';
 import SCHEMA_CONST from "../constant/SchemaConstant";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 class EditSchemaPage extends Component {
 

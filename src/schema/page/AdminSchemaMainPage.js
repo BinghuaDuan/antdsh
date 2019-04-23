@@ -6,7 +6,7 @@ import SCHEMA_CONST from '../constant/SchemaConstant';
 import CommonProductCard from '../../common/component/ProductCard';
 import { withRouter } from 'react-router-dom';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 class AdminSchemaMainPage extends Component {
 

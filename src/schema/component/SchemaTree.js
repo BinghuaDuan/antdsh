@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Tree, Button, Modal, message } from 'antd';
-import schemaTreeCoverStyles from '../css/schemaTreeCover.scss';
 import OWL_CONST from '../constant/OwlConstant';
 
 

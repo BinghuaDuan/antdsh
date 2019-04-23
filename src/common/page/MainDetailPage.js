@@ -12,7 +12,7 @@ const { Content } = Layout;
 
 class MainDetailPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       productDetailData: null,
       relatedProductsData: null,
@@ -22,6 +22,56 @@ class MainDetailPage extends Component {
     this.fetchProductDetailData();  
     this.fetchRelatedProductsData();
   }
+  render() {
+    return (
+      <Layout className="layout" style={{ height: "auto" }}>
+        <MenuHeader></MenuHeader>
+        <Content style={{ padding: '0 50px' }}>
+          {this.renderBreadcrumb()}
+          <div style={{ background: '#f0f2f5', padding: 24, height: 'auto' }}>
+            <div className={commonStyles.page}>
+              <div className={commonStyles.content}>
+                <div className={mainDetailStyles.content}>
+                  <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                    {this.renderHeader(this.state.productDetailData)}
+                  </div>
+                  <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                    <Menu
+                      theme="light"
+                      mode="horizontal"
+                      defaultSelectedKeys={['0']}
+                      style={{ lineHeight: '64px' }}
+                    >
+                      <Menu.Item key="0">
+                        <HashLink to={`${this.props.match.url}#productIntroduceAnchor0`}>产品参数</HashLink>
+                      </Menu.Item>
+                      <Menu.Item key="1">
+                        <HashLink to={`${this.props.match.url}#productIntroduceAnchor1`}>产品详情</HashLink>
+                      </Menu.Item>
+                      <Menu.Item key="2">
+                        <HashLink to={`${this.props.match.url}#productIntroduceAnchor2`}>使用须知</HashLink>
+                      </Menu.Item>
+                    </Menu>
+                    {this.renderProductIntroduce()}
+                  </div>
+                </div>
+                <div className={mainDetailStyles.sidebar}>
+                  <div className={mainDetailStyles.card}>
+                    <div className={mainDetailStyles.detailRelated}>
+                      <h2>相关推荐</h2>
+                      {this.renderRelatedProducts()}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </Content>
+      </Layout>
+    )
+  }
+
   async fetchRelatedProductsData() {
     const pid = this.props.match.params.id;
     const res = await mainPageService.relatedProductsData(pid)
@@ -54,18 +104,17 @@ class MainDetailPage extends Component {
       )
     }
   }
-  renderHeader() {
-    const productDetailData = this.state.productDetailData;
-    if (productDetailData) {
+  renderHeader(detailData) {
+    if (detailData) {
       return (
         <div className={mainDetailStyles.detailHeader}>
           <div className={mainDetailStyles.detailHeaderImg}>
-            <img src={productDetailData.headImgSrc} alt={productDetailData.title}></img>
+            <img src={detailData.headImgSrc} alt={detailData.title}></img>
           </div>
           <div className={mainDetailStyles.detailHeaderText}>
-            <h1>{productDetailData.title}</h1>
-            <p>{productDetailData.desc}</p>
-            <Button onClick={() => {window.location=productDetailData.demoHref}}>试用</Button>
+            <h1>{detailData.title}</h1>
+            <p>{detailData.desc}</p>
+            <Button onClick={() => {window.location=detailData.demoHref}}>试用</Button>
           </div>
         </div>
       )
@@ -132,55 +181,7 @@ class MainDetailPage extends Component {
       })
     }
   }
-  render() {
-    return (
-      <Layout className="layout">
-        <MenuHeader></MenuHeader>
-        <Content style={{ padding: '0 50px' }}>
-          {this.renderBreadcrumb()}
-          <div style={{ background: '#f0f2f5', padding: 24, minHeight: 880 }}>
-            <div className={commonStyles.page}>
-              <div className={commonStyles.content}>
-                <div className={mainDetailStyles.content}>
-                  <div className={commonStyles.card + ' ' + mainDetailStyles.card}>  
-                    {this.renderHeader()}
-                  </div>
-                  <div className={commonStyles.card + ' ' + mainDetailStyles.card}>  
-                    <Menu
-                      theme="light"
-                      mode="horizontal"
-                      defaultSelectedKeys={['0']}
-                      style={{ lineHeight: '64px' }}
-                    >
-                      <Menu.Item key="0">
-                        <HashLink to={`${this.props.match.url}#productIntroduceAnchor0`}>产品参数</HashLink>
-                      </Menu.Item>
-                      <Menu.Item key="1">
-                      <HashLink to={`${this.props.match.url}#productIntroduceAnchor1`}>产品详情</HashLink>
-                      </Menu.Item>
-                      <Menu.Item key="2">
-                        <HashLink to={`${this.props.match.url}#productIntroduceAnchor2`}>使用须知</HashLink>
-                      </Menu.Item>
-                    </Menu>
-                    {this.renderProductIntroduce()}
-                  </div>
-                </div>
-                <div className={mainDetailStyles.sidebar}>
-                  <div className={mainDetailStyles.card}>
-                    <div className={mainDetailStyles.detailRelated}>
-                      <h2>相关推荐</h2>
-                      {this.renderRelatedProducts()}
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </Content>
-      </Layout>
-    )
-  }
+
 }
 
 export default MainDetailPage

@@ -7,7 +7,7 @@ import mainPageService from '../service/mainPageService';
 import CommonProductCard from '../component/ProductCard';
 
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 class ProductCard extends Component {
   renderProducts() {
@@ -66,7 +66,7 @@ class MainHomePage extends Component {
   }
   render() {
     return (
-      <Layout className="layout">
+      <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader></MenuHeader>
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>

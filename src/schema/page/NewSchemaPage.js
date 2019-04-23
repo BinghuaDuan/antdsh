@@ -5,89 +5,88 @@ import commonStyles from '../../common/css/common.module.scss';
 import SchemaTree from '../component/SchemaTree';
 import schemaService from '../service/SchemaService';
 import RESULT from '../../common/constant/Result';
-import CODES from '../../common/constant/Codes';
 import SCHEMA_CONST from "../constant/SchemaConstant";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
-const owlTemp = {
-  "@graph": [
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Action",
-      "@type": "owl:Class",
-      "label": "action",
-      "subClassOf": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie"
-    },
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Documentary",
-      "@type": "owl:Class",
-      "label": "documentary",
-      "subClassOf": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie"
-    },
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
-      "@type": "owl:Class",
-      "label": "movie"
-    },
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#hasActor",
-      "@type": "owl:DatatypeProperty",
-      "domain": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
-      "label": "hasActor",
-      "range": "xsd:string"
-    },
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#hasDirector",
-      "@type": "owl:DatatypeProperty",
-      "domain": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
-      "label": "hasDirector",
-      "range": "xsd:string"
-    },
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#name",
-      "@type": "owl:DatatypeProperty",
-      "domain": [
-        "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
-        "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Documentary",
-        "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Action"
-      ],
-      "label": "name",
-      "range": "xsd:string"
-    },
-    {
-      "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#similar",
-      "@type": "owl:ObjectProperty",
-      "domain": [
-        "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Documentary",
-      ],
-      "label": "name",
-      "range": [
-        "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Action",
-      ]
-    },
-  ],
-  "@context": {
-    "label": {
-      "@id": "http://www.w3.org/2000/01/rdf-schema#label"
-    },
-    "subClassOf": {
-      "@id": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
-      "@type": "@id"
-    },
-    "domain": {
-      "@id": "http://www.w3.org/2000/01/rdf-schema#domain",
-      "@type": "@id"
-    },
-    "range": {
-      "@id": "http://www.w3.org/2000/01/rdf-schema#range",
-      "@type": "@id"
-    },
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
-  }
-};
+// const owlTemp = {
+//   "@graph": [
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Action",
+//       "@type": "owl:Class",
+//       "label": "action",
+//       "subClassOf": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie"
+//     },
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Documentary",
+//       "@type": "owl:Class",
+//       "label": "documentary",
+//       "subClassOf": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie"
+//     },
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
+//       "@type": "owl:Class",
+//       "label": "movie"
+//     },
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#hasActor",
+//       "@type": "owl:DatatypeProperty",
+//       "domain": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
+//       "label": "hasActor",
+//       "range": "xsd:string"
+//     },
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#hasDirector",
+//       "@type": "owl:DatatypeProperty",
+//       "domain": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
+//       "label": "hasDirector",
+//       "range": "xsd:string"
+//     },
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#name",
+//       "@type": "owl:DatatypeProperty",
+//       "domain": [
+//         "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Movie",
+//         "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Documentary",
+//         "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Action"
+//       ],
+//       "label": "name",
+//       "range": "xsd:string"
+//     },
+//     {
+//       "@id": "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#similar",
+//       "@type": "owl:ObjectProperty",
+//       "domain": [
+//         "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Documentary",
+//       ],
+//       "label": "name",
+//       "range": [
+//         "http://ont.beim.site/a5108a13-b9db-4f2a-81d2-7610c1bfdf47#Action",
+//       ]
+//     },
+//   ],
+//   "@context": {
+//     "label": {
+//       "@id": "http://www.w3.org/2000/01/rdf-schema#label"
+//     },
+//     "subClassOf": {
+//       "@id": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+//       "@type": "@id"
+//     },
+//     "domain": {
+//       "@id": "http://www.w3.org/2000/01/rdf-schema#domain",
+//       "@type": "@id"
+//     },
+//     "range": {
+//       "@id": "http://www.w3.org/2000/01/rdf-schema#range",
+//       "@type": "@id"
+//     },
+//     "owl": "http://www.w3.org/2002/07/owl#",
+//     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+//     "xsd": "http://www.w3.org/2001/XMLSchema#",
+//     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+//   }
+// };
 
 
 class NewSchemaPage extends Component {

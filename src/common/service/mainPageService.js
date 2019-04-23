@@ -1,13 +1,8 @@
 // main page service
 
-const mainHomeData = async (query) => {
-  // const response = await fetch('/keywordsearch/', {
-  //   'method': 'POST',
-  //   'headers': {
-  //     'content-type': 'application/json'
-  //   },
-  //   'body': JSON.stringify({query})
-  // })
+const mainPageService = {};
+
+mainPageService.mainHomeData = async (query) => {
   return {
     ok: true,
     json: () => [
@@ -17,9 +12,9 @@ const mainHomeData = async (query) => {
         products: [
           {
             pid: 1,
-            href: '/main/detail/1',
+            href: '/app/search',
             imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
+            title: 'App',
             desc: '描述描述描述描述描述',
           },
           {
@@ -45,79 +40,12 @@ const mainHomeData = async (query) => {
           },
         ]
       },
-      {
-        cid: 1,
-        label: '推荐',
-        products: [
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-        ]
-      },
-      {
-        cid: 1,
-        label: '推荐',
-        products: [
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-        ]
-      },
+
     ]
   }
 };
 
-const productDetailData = async (pid) => {
+mainPageService.productDetailData = async (pid) => {
   return {
     ok: true,
     json: async () => {
@@ -145,7 +73,7 @@ const productDetailData = async (pid) => {
   }
 };
 
-const relatedProductsData = async (pid) => {
+mainPageService.relatedProductsData = async (pid) => {
   return {
     ok: true,
     json: async () => {
@@ -173,8 +101,4 @@ const relatedProductsData = async (pid) => {
   }
 }
 
-export default {
-  mainHomeData,
-  productDetailData,
-  relatedProductsData,
-}
+export default mainPageService;

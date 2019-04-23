@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Row, Col } from 'antd';
 
-import LoginChecker from "./LoginChecker";
 import UserInfoBox from './UserInfoBox';
 
 const { Header } = Layout;

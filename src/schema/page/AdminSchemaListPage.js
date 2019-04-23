@@ -4,11 +4,10 @@ import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
 import schemaService from '../service/SchemaService';
 import RESULT from "../../common/constant/Result";
-import AdminSchemaMainPage from "./AdminSchemaMainPage";
 import adminSchemaService from '../service/AdminSchemaService';
 import SCHEMA_CONST from '../constant/SchemaConstant';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 class SchemaInfoTabel extends Component {
 

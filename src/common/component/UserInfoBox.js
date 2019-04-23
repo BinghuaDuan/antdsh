@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {Layout, Menu, Row, Col, message} from 'antd';
+import { message } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 import userService from "../../user/service/userService";
 import RESULT from "../constant/Result";
 import CODES from "../constant/Codes";
 
-const { Header } = Layout;
 
 /**
  * props: {

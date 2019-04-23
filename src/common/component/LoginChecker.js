@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, Menu, message} from 'antd';
+import { message} from 'antd';
 
 import userService from '../../user/service/userService';
 import RESULT from "../constant/Result";

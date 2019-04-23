@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
-import MainHomePage from '../page/MainHomePage'
-import MainDetailPage from '../page/MainDetailPage'
-import MainListPage from '../page/MainListPage'
+import MainHomePage from '../page/MainHomePage';
+import MainDetailPage from '../page/MainDetailPage';
+
 
 class MainRouter extends Component {
   render() {
@@ -10,8 +10,8 @@ class MainRouter extends Component {
     return (
       <div style={{ height: "100%" }}>
         <Switch>
+          <Route path={`${match.path}/`} exact component={MainHomePage}></Route>
           <Route path={`${match.path}/home`} component={MainHomePage}></Route>
-          <Route path={`${match.path}/list`} component={MainListPage}></Route>
           <Route path={`${match.path}/detail/:id`} component={MainDetailPage}></Route>
         </Switch>
       </div>
