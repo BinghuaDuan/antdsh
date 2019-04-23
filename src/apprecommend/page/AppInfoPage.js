@@ -17,7 +17,6 @@ import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from "../../common/css/common.module.scss";
 import mainDetailStyles from "../../common/css/mainDetail.module.scss";
 import appRecommendService from "../service/appRecommendService";
-import RESULT from "../../common/constant/Result";
 
 
 const { Content } = Layout;
@@ -32,8 +31,9 @@ class PopularityChart extends Component {
     appPopularityData: null,
   };
 
-  componentWillMount = async () => {
-    const appName = this.props.appName;
+  componentWillReceiveProps = async (nextProps, nextContext) => {
+    const appName = nextProps.appName;
+    if (appName === null) return;
     const appPopularityData = await this.fetchAppPopularityData(appName);
     this.setState({ appPopularityData });
   };
@@ -85,16 +85,14 @@ class PopularityChart extends Component {
       message.error(JSON.stringify(response));
       return null;
     }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      message.error(JSON.stringify(results));
-      return null;
-    }
-    if (results.data.length === 0) return null;
-    for (let item of results.data) {
+    const data = await response.json();
+    if (data.length === 0) return null;
+    for (let item of data) {
       item['popularity'] = item['download'] * item['likerate'];
     }
-    return this.genPopularityData(results.data);
+    console.log('originData: ', data);
+    console.log('parseData: ', this.genPopularityData(data));
+    return this.genPopularityData(data);
   };
 
   /**
@@ -204,10 +202,13 @@ class FunctionInfoCard extends Component {
     appFunctionInfoData: null,
   };
 
-  componentWillMount = async () => {
-    const appName = this.props.appName;
+  componentWillReceiveProps = async (nextProps, currContext) => {
+    const appName = nextProps.appName;
+    if (appName === null) return;
     let appFunctionInfoData = await this.fetchAppFunctionInfoData(appName);
-    appFunctionInfoData = this.parseFunctionInfoData(appFunctionInfoData);
+    if (appFunctionInfoData) {
+      appFunctionInfoData = this.parseFunctionInfoData(appFunctionInfoData);
+    }
     this.setState({ appFunctionInfoData });
   };
 
@@ -273,12 +274,16 @@ class FunctionInfoCard extends Component {
   parseFunctionInfoData = (appFunctionInfoData) => {
     let resObj = {};
     for (let item of appFunctionInfoData) {
-      item['count'] = 1; // 用于饼图计算百分比，使用相同比重
-      if (item['updatetime'] in resObj) {
-        resObj[item['updatetime']].push(item);
-      }
-      else {
-        resObj[item['updatetime']] = [item];
+      const updateTime = item['updatetime'];
+      const updateVersion = item['updateversion'];
+      const updateFunctions = item['updatefunction'].split(',');
+      resObj[updateTime] = [];
+      for (let func of updateFunctions) {
+        resObj[updateTime].push({
+          updateversion: updateVersion,
+          updatefunction: func,
+          count: 1, // 用于饼图计算百分比，使用相同比重
+        });
       }
     }
     let resArr = [];
@@ -300,13 +305,9 @@ class FunctionInfoCard extends Component {
       message.error(JSON.stringify(response));
       return null;
     }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      message.error(JSON.stringify(results));
-      return null;
-    }
-    if (results.data.length === 0) return null;
-    return results.data;
+    const data = await response.json();
+    if (data.length === 0) return null;
+    return data;
   };
 }
 
@@ -360,13 +361,9 @@ class AppInfoPage extends Component {
       message.error(JSON.stringify(response));
       return null;
     }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      message.error(JSON.stringify(results));
-      return null;
-    }
-    if (results.data.length === 0) return null;
-    return results.data[0];
+    const data = await response.json();
+    if (data.length === 0) return null;
+    return data[0];
   };
 
   getQuery = () => {

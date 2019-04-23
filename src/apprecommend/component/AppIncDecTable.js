@@ -32,10 +32,10 @@ class AppIncDecTable extends Component {
     return (
       <Row>
         <Col span={12}>
-          <Table columns={getColumns('增加App')} dataSource={this.state.incInfo} />
+          <Table columns={getColumns('新增App')} dataSource={this.state.incInfo} />
         </Col>
         <Col span={12}>
-          <Table columns={getColumns('减少App')} dataSource={this.state.decInfo} />
+          <Table columns={getColumns('退出App')} dataSource={this.state.decInfo} />
         </Col>
       </Row>
     )
@@ -43,14 +43,14 @@ class AppIncDecTable extends Component {
 
   setIncDecInfo = async () => {
     const response = await appRecommendService.getIncdecInfo();
+    console.log(response);
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      return message.error(JSON.stringify(results));
+    const data = await response.json();
+    if (data.length === 0) {
+      return;
     }
-    const data = results.data;
     let incDecUpdateTime = null;
     let incInfo = [];
     let decInfo = [];

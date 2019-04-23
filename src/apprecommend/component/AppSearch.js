@@ -25,11 +25,8 @@ class AppSearch extends Component {
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      return message.error(JSON.stringify(results));
-    }
-    if (results.data.length > 0) {
+    const data = await response.json();
+    if (data.length > 0) {
       window.location = `/app/info?appName=${appName}`;
     }
     else {

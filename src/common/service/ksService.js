@@ -1,8 +1,11 @@
-// keyword search service
+import appconfig from '../../appconfig';
+
+const defaultUrlPrefix = appconfig['defaultServer']['host'];
 
 const keywordSearch = async (query) => {
-  const response = await fetch('/keywordsearch/', {
+  const response = await fetch(`${defaultUrlPrefix}/keywordsearch/`, {
     'method': 'POST',
+    credentials: 'include',
     'headers': {
       'content-type': 'application/json'
     },
