@@ -1,15 +1,20 @@
+import appconfig from '../../appconfig';
+
+const defaultUrlPrefix = appconfig['defaultServer']['host'];
 const SchemaService = {};
 
 SchemaService.getSchemaInfo = async (status="") => {
-  const response = await fetch('/schema/info', {
+  const response = await fetch(`${defaultUrlPrefix}/schema/info`, {
     method: 'GET',
+    credentials: 'include',
   });
   return response;
 };
 
 SchemaService.confirmMatch = async (sid) => {
-  const response = await fetch('/schema/confirm/match', {
+  const response = await fetch(`${defaultUrlPrefix}/schema/confirm/match`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'content-type': 'application/json',
     },
@@ -21,8 +26,9 @@ SchemaService.confirmMatch = async (sid) => {
 };
 
 SchemaService.newSchema = async (owl, owlLang, sname) => {
-  const response = await fetch('/schema/new', {
+  const response = await fetch(`${defaultUrlPrefix}/schema/new`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'content-type': 'application/json',
     },
@@ -36,8 +42,9 @@ SchemaService.newSchema = async (owl, owlLang, sname) => {
 };
 
 SchemaService.editSchema = async (owl, owlLang, sname) => {
-  const response = await fetch('/schema/edit', {
+  const response = await fetch(`${defaultUrlPrefix}/schema/edit`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'content-type': 'application/json',
     },
@@ -51,8 +58,9 @@ SchemaService.editSchema = async (owl, owlLang, sname) => {
 };
 
 SchemaService.getSchemaInOwl = async (sid) => {
-  const response = await fetch(`/schema/schemainowl?sid=${sid}`, {
+  const response = await fetch(`${defaultUrlPrefix}/schema/schemainowl?sid=${sid}`, {
     method: 'GET',
+    credentials: 'include',
   });
   return response;
 };

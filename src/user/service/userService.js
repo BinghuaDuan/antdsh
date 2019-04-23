@@ -1,11 +1,17 @@
+import appconfig from '../../appconfig';
+
+const defaultUrlPrefix = appconfig['defaultServer']['host'];
 const UserService = {};
 
+
 UserService.login = async (username, password) => {
-  const response = await fetch('/user/login', {
+
+  const response = await fetch(`${defaultUrlPrefix}/user/login`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({
       username,
       password
@@ -15,18 +21,20 @@ UserService.login = async (username, password) => {
 };
 
 UserService.getUserInfo = async () => {
-  const response = await fetch('/user/info', {
+  const response = await fetch(`${defaultUrlPrefix}/user/info`, {
     method: 'GET',
+    credentials: 'include',
   });
   return response;
 };
 
 UserService.register = async (username, password) => {
-  const response = await fetch('/user/register', {
+  const response = await fetch(`${defaultUrlPrefix}/user/register`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({
       username,
       password
@@ -36,8 +44,9 @@ UserService.register = async (username, password) => {
 };
 
 UserService.logout = async () => {
-  const response = await fetch('/user/logout', {
+  const response = await fetch(`${defaultUrlPrefix}/user/logout`, {
     method: 'GET',
+    credentials: 'include',
   });
   return response;
 };

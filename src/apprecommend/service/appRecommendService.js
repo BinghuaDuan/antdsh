@@ -1,5 +1,7 @@
 import RESULT from '../../common/constant/Result';
+import appconfig from '../../appconfig';
 
+const defaultUrlPrefix = appconfig['dbhServer']['host'];
 const appRecommendService = {};
 
 /**
@@ -9,7 +11,11 @@ const appRecommendService = {};
  * 异常输出[]
  */
 appRecommendService.getIncdecInfo = async () => {
-  // TODO 真实请求/infocollection/incdecrequest/
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/incdecrequest/`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  return response;
   return {
     ok: true,
     json: async () => {
@@ -83,7 +89,11 @@ appRecommendService.getIncdecInfo = async () => {
  * 异常输出[]
  */
 appRecommendService.getAppInfo = async (appName) => {
-  // TODO 真实请求/infocollection/introductiongetone/[app_name]
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/introductiongetone/${appName}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  return response;
   return {
     ok: true,
     json: async () => {
@@ -114,7 +124,11 @@ appRecommendService.getAppInfo = async (appName) => {
  * @returns {Promise<void>}
  */
 appRecommendService.getAppFunctionInfo = async (appName) => {
-  // TODO 真实请求 /infocollection/functionsetgetone/[app_name]
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/functionsetgetone/${appName}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  return response;
   return {
     ok: true,
     json: async () => {
@@ -164,23 +178,24 @@ appRecommendService.getAppFunctionInfo = async (appName) => {
  * @returns {Promise<void>}
  */
 appRecommendService.getAppPopularity = async (appName) => {
-  // TODO 真实请求 /infocollection/popularitygetone/[app_name]
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/popularitygetone/${appName}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  return response;
   return {
     ok: true,
     json: async () => {
-      return {
-        code: RESULT.DEFAULT_SUCC_CODE,
-        data: [
-          {
-            "id": 1786,
-            "appname": "百度地图",
-            "download": 10280000,
-            "reviewpeople": 2056,
-            "likerate": 0.8,
-            "crawltime": "2019-04-16"
-          }
-        ]
-      }
+      return [
+        {
+          "id": 1786,
+          "appname": "百度地图",
+          "download": 10280000,
+          "reviewpeople": 2056,
+          "likerate": 0.8,
+          "crawltime": "2019-04-16"
+        }
+      ]
     }
   }
 };
