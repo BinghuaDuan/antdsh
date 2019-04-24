@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Form, Select, InputNumber, Switch, Radio,
-  Slider, Button, Upload, Icon, Rate, Checkbox,
-  Row, Col,
+  Button, Upload, Icon,
   message,
 } from 'antd';
 import appRecommendService from "../service/appRecommendService";
@@ -16,11 +14,9 @@ import appRecommendService from "../service/appRecommendService";
 class FileUpload extends Component {
   state = {
     fileList: [],
-    uploading: false,
   };
 
   render() {
-    const { uploading, fileList } = this.state;
     return (
       <div>
         <Upload beforeUpload={this.beforeUpload}>

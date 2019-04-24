@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { message, Button, Modal } from 'antd';
 import {
-  G2,
   Chart,
   Geom,
   Axis,
   Tooltip,
   Coord,
-  Label,
   Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util
 } from "bizcharts";
 import DataSet from "@antv/data-set";
 
@@ -31,11 +24,6 @@ class TrackFileCard extends Component {
   state = {
     userTrackInfo: [],
     trackModalVisible: false,
-  };
-
-  componentWillReceiveProps = async (nextProps, nextContext) => {
-    const username = nextProps.username;
-
   };
 
   render() {
