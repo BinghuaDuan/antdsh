@@ -295,12 +295,9 @@ appRecommendService.uploadTrackFile = async (username, trackFile) => {
   const formData = new FormData();
   formData.append("username", username);
   formData.append("trackfile", trackFile);
-  const response = await fetch(`${defaultUrlPrefix}/infocollection/uploadprocess`, {
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/uploadprocess/`, {
     method: "POST",
     credentials: "include",
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
     body: formData
   });
   return response;
