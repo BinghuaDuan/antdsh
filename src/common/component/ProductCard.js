@@ -16,7 +16,7 @@ class ProductCard extends Component {
   render() {
     const data = this.props.data;
     return (
-      <Col span={6} key={`products-${Math.random()}`}>
+      <Col sm={12} md={8} xl={6} key={`products-${Math.random()}`}>
         <a className={productCardStyles.card} href={data.href}>
           <div className={productCardStyles.cardImg}>
             <img src={data.imgSrc} alt={data.title}></img>
