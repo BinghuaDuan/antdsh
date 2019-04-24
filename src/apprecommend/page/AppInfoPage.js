@@ -17,7 +17,8 @@ import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from "../../common/css/common.module.scss";
 import mainDetailStyles from "../../common/css/mainDetail.module.scss";
 import appRecommendService from "../service/appRecommendService";
-
+import AppRecommendCard from '../component/AppRecommendCard';
+import appInfoCardStyles from '../css/appInfoCard.module.scss';
 
 const { Content } = Layout;
 
@@ -90,8 +91,6 @@ class PopularityChart extends Component {
     for (let item of data) {
       item['popularity'] = item['download'] * item['likerate'];
     }
-    console.log('originData: ', data);
-    console.log('parseData: ', this.genPopularityData(data));
     return this.genPopularityData(data);
   };
 
@@ -228,7 +227,7 @@ class FunctionInfoCard extends Component {
   renderFunctionInfoCharts(dataArr) {
     return dataArr.map((val, idx) => {
       return (
-        <Col sm={24} md={12} lg={8} xl={6} key={`functionInfoChartCol${idx}`}>
+        <Col sm={24} xl={12} xxl={8} key={`functionInfoChartCol${idx}`}>
           <FunctionInfoChart functionInfoData={val} />
         </Col>
       )
@@ -336,17 +335,25 @@ class AppInfoPage extends Component {
           <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
-                <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
-                  {this.renderHeader(this.state.appInfoData)}
-                </div>
-                <div className={commonStyles.cardTitle}>欢迎度变化</div>
-                <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
-                  <PopularityChart appName={this.state.appName}></PopularityChart>
-                </div>
-                <div className={commonStyles.cardTitle}>功能变化</div>
-                <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
-                  <FunctionInfoCard appName={this.state.appName}></FunctionInfoCard>
-                </div>
+                <Row gutter={16}>
+                  <Col sm={24} xl={16}>
+                    <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      {this.renderHeader(this.state.appInfoData)}
+                    </div>
+                    <div className={commonStyles.cardTitle}>欢迎度变化</div>
+                    <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      <PopularityChart appName={this.state.appName}></PopularityChart>
+                    </div>
+                    <div className={commonStyles.cardTitle}>功能变化</div>
+                    <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      <FunctionInfoCard appName={this.state.appName}></FunctionInfoCard>
+                    </div>
+                  </Col>
+                  <Col sm={24} xl={8}>
+                    <AppRecommendCard></AppRecommendCard>
+                  </Col>
+
+                </Row>
               </div>
             </div>
           </div>
@@ -380,13 +387,19 @@ class AppInfoPage extends Component {
     if (detailData) {
       return (
         <div className={mainDetailStyles.detailHeader}>
-          <div className={mainDetailStyles.detailHeaderImg}>
-            <img src={detailData.imageurl} alt={detailData.appname}></img>
-          </div>
-          <div className={mainDetailStyles.detailHeaderText}>
-            <h1>{detailData.appname}</h1>
-            <p>{detailData.introduction}</p>
-          </div>
+          <Row gutter={16}>
+            <Col span={4}>
+              <div className={appInfoCardStyles.headerImg}>
+                <img src={detailData.imageurl} alt={detailData.appname}></img>
+              </div>
+            </Col>
+            <Col span={20}>
+              <div className={appInfoCardStyles.headerText}>
+                <h1>{detailData.appname}</h1>
+                <p>{detailData.introduction}</p>
+              </div>
+            </Col>
+          </Row>
         </div>
       )
     }

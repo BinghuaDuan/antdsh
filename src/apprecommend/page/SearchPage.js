@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import {Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from "../../common/css/common.module.scss";
 import AppSearch from '../component/AppSearch';
 import AppIncDecTable from "../component/AppIncDecTable";
+import mainDetailStyles from "../../common/css/mainDetail.module.scss";
+import AppRecommendCard from '../component/AppRecommendCard';
 
 const { Content } = Layout;
 
@@ -16,15 +18,22 @@ class SearchPage extends Component {
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="3" />
         <Content style={{ padding: '0 50px' }}>
-          <div style={{ background: '#f8f9fa', padding: 24, height: '100%' }}>
+          <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
-                <div className={commonStyles.card}>
-                  <AppSearch></AppSearch>
-                </div>
-                <div className={commonStyles.card}>
-                  <AppIncDecTable></AppIncDecTable>
-                </div>
+                <Row gutter={16}>
+                  <Col md={24} xl={16}>
+                    <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      <AppSearch></AppSearch>
+                    </div>
+                    <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      <AppIncDecTable></AppIncDecTable>
+                    </div>
+                  </Col>
+                  <Col md={24} xl={8}>
+                    <AppRecommendCard></AppRecommendCard>
+                  </Col>
+                </Row>
               </div>
             </div>
           </div>

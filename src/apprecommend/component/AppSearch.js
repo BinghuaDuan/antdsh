@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Input, message} from 'antd';
 
 import appRecommendService from '../service/appRecommendService';
-import RESULT from "../../common/constant/Result";
 
 const { Search } = Input;
 

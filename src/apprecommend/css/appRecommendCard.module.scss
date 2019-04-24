@@ -1,0 +1,45 @@
+.detailRelated {
+  h2 {
+    font-size: 12px;
+    line-height: 22px;
+    color: #000;
+    font-weight: 700;
+  }
+  .detailRelatedItem {
+    padding: 20px 0 25px;
+    .detailRelatedImg {
+      float: left;
+      margin-right: 20px;
+      width: 100px;
+      height: 75px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+    .detailRelatedText {
+      h3 {
+        font-size: 12px;
+        line-height: 22px;
+        padding: 4px 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        a {
+          color: #000;
+          text-decoration: none;
+        }
+      }
+      p {
+        font-size: 12px;
+        color: #666;
+        line-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

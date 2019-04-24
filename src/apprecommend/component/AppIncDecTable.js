@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Table, message, Row, Col } from 'antd';
 
 import appRecommendService from '../service/appRecommendService';
-import RESULT from "../../common/constant/Result";
 
 
 const getColumns = (title) => {
@@ -43,7 +42,6 @@ class AppIncDecTable extends Component {
 
   setIncDecInfo = async () => {
     const response = await appRecommendService.getIncdecInfo();
-    console.log(response);
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }
@@ -56,6 +54,7 @@ class AppIncDecTable extends Component {
     let decInfo = [];
     for (let item of data) {
       incDecUpdateTime = item['crawltime'];
+      item['key'] = `incDecTableItemKey${item['id']}`;  // react table render 需要指定key
       if (item['incdectype'] === '+') {
         incInfo.push(item);
       }
