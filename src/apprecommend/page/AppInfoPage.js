@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, message, Row, Col } from 'antd';
+import {Layout, message, Row, Col, Breadcrumb} from 'antd';
 import querystring from "querystring";
 import {
   Chart,
@@ -230,7 +230,7 @@ class FunctionInfoCard extends Component {
   renderFunctionInfoCharts(dataArr) {
     return dataArr.map((val, idx) => {
       return (
-        <Col sm={24} xl={12} xxl={8} key={`functionInfoChartCol${idx}`}>
+        <Col xs={24} md={12} xxl={8} key={`functionInfoChartCol${idx}`}>
           <FunctionInfoChart functionInfoData={val} />
         </Col>
       )
@@ -335,8 +335,13 @@ class AppInfoPage extends Component {
   render() {
     return (
       <Layout className="layout" style={{ height: "100%" }}>
-        <MenuHeader defaultSelectedKey="3" />
+        <MenuHeader defaultSelectedKey="1" />
         <Content style={{ padding: '0 50px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item><a href={"/main/home"}>首页</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={"/app/search"}>App</a></Breadcrumb.Item>
+            <Breadcrumb.Item>详情</Breadcrumb.Item>
+          </Breadcrumb>
           <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, Row, Col, message} from 'antd';
+import {Layout, Row, Col, message, Breadcrumb} from 'antd';
 
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from "../../common/css/common.module.scss";
@@ -28,8 +28,12 @@ class SearchPage extends Component {
   render() {
     return (
       <Layout className="layout" style={{ height: "100%" }}>
-        <MenuHeader defaultSelectedKey="3" />
+        <MenuHeader defaultSelectedKey="1" />
         <Content style={{ padding: '0 50px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item><a href={"/main/home"}>首页</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={"/app/search"}>App</a></Breadcrumb.Item>
+          </Breadcrumb>
           <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
