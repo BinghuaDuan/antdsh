@@ -76,6 +76,7 @@ class AppRecommendCard extends Component {
     }
     const results = await response.json();
     if (!results.ok) {
+      results['oper'] = 'getRecommendApps';
       message.info(JSON.stringify(results));
       return [];
     }

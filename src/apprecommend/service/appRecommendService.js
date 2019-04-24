@@ -140,6 +140,53 @@ const fakeResponse = {
       }
     }
   },
+  getUserTrackInfo: {
+    ok: true,
+    json: async () => {
+      return [
+        {
+          appname: "百度",
+          values: "[4, 10, 11]",
+        },
+        {
+          appname: "美团",
+          values: "[4, 4, 4]",
+        },
+        {
+          appname: "知乎",
+          values: "[6, 2, 6]",
+        },
+        {
+          appname: "饿了么",
+          values: "[10, 11, 12]",
+        },
+        {
+          appname: "京东",
+          values: "[6, 6, 2]",
+        },
+        {
+          appname: "京东金融",
+          values: "[3, 2, 3]",
+        },
+        {
+          appname: "淘宝",
+          values: "[12, 12, 12]",
+        },
+        {
+          appname: "阿里巴巴",
+          values: "[1, 2, 3]",
+        },
+        {
+          appname: "网易新闻",
+          values: "[8, 8, 8]",
+        },
+        {
+          appname: "bilibili",
+          values: "[11, 12, 13]",
+        },
+      ]
+    }
+  }
 };
 
 
@@ -232,6 +279,41 @@ appRecommendService.getRecommendApps = async (username) => {
   return response;
 };
 
+/**
+ * POST 用户轨道文件上传
+ * /infocollection/uploadprocess
+ * 表单方式提交
+ * body: {
+ *   username: String,
+ *   trackfile: File,
+ * }
+ * @param username
+ * @param trackFile
+ * @returns {Promise<Response>}
+ */
+appRecommendService.uploadTrackFile = async (username, trackFile) => {
+  const formData = new FormData();
+  formData.append("username", username);
+  formData.append("trackfile", trackFile);
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/uploadprocess`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: formData
+  });
+  return response;
+};
+
+appRecommendService.getUserTrackInfo = async (username) => {
+  if (appconfig.env === 'dev') return fakeResponse['getUserTrackInfo'];
+  const response = await fetch(`${defaultUrlPrefix}/infocollection/track/${username}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  return response;
+};
 
 
 export default appRecommendService;

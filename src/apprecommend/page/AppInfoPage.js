@@ -19,6 +19,9 @@ import mainDetailStyles from "../../common/css/mainDetail.module.scss";
 import appRecommendService from "../service/appRecommendService";
 import AppRecommendCard from '../component/AppRecommendCard';
 import appInfoCardStyles from '../css/appInfoCard.module.scss';
+import userService from "../../user/service/userService";
+import RESULTS from "../../common/constant/Result";
+import TrackFileCard from '../component/TrackFileCard';
 
 const { Content } = Layout;
 
@@ -325,6 +328,8 @@ class AppInfoPage extends Component {
       const appInfoData = await this.fetchAppInfoData(appName);
       this.setState({ appName, appInfoData });
     }
+    const username = await this.getUsername();
+    this.setState({ username });
   };
 
   render() {
@@ -340,17 +345,20 @@ class AppInfoPage extends Component {
                     <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
                       {this.renderHeader(this.state.appInfoData)}
                     </div>
-                    <div className={commonStyles.cardTitle}>欢迎度变化</div>
                     <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      <h2>欢迎度变化</h2>
+                      <br/>
                       <PopularityChart appName={this.state.appName}></PopularityChart>
                     </div>
-                    <div className={commonStyles.cardTitle}>功能变化</div>
                     <div className={commonStyles.card + ' ' + mainDetailStyles.card}>
+                      <h2>功能变化</h2>
+                      <br/>
                       <FunctionInfoCard appName={this.state.appName}></FunctionInfoCard>
                     </div>
                   </Col>
                   <Col sm={24} xl={8}>
-                    <AppRecommendCard></AppRecommendCard>
+                    <AppRecommendCard username={this.state.username}></AppRecommendCard>
+                    <TrackFileCard username={this.state.username}></TrackFileCard>
                   </Col>
 
                 </Row>
@@ -361,6 +369,20 @@ class AppInfoPage extends Component {
       </Layout>
     )
   }
+
+  getUsername = async () => {
+    const response = await userService.getUserInfo();
+    if (!response.ok) {
+      message.error(JSON.stringify(response));
+      return null;
+    }
+    const results = await response.json();
+    if (results.code !== RESULTS.DEFAULT_SUCC_CODE) {
+      message.info(JSON.stringify(results));
+      return null;
+    }
+    return results.username;
+  };
 
   fetchAppInfoData = async (appName) => {
     const response = await appRecommendService.getAppInfo(appName);

@@ -9,6 +9,7 @@ import mainDetailStyles from "../../common/css/mainDetail.module.scss";
 import AppRecommendCard from '../component/AppRecommendCard';
 import userService from "../../user/service/userService";
 import RESULTS from "../../common/constant/Result";
+import TractFileCard from '../component/TrackFileCard';
 
 const { Content } = Layout;
 
@@ -43,6 +44,7 @@ class SearchPage extends Component {
                   </Col>
                   <Col md={24} xl={8}>
                     <AppRecommendCard username={this.state.username}></AppRecommendCard>
+                    <TractFileCard username={this.state.username} />
                   </Col>
                 </Row>
               </div>
