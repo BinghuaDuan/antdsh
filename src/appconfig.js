@@ -1,4 +1,4 @@
-const env = 'test';
+const env = 'dev';
 
 const appconfig = {};
 
@@ -22,10 +22,10 @@ appconfig.test = {
 
 appconfig.prod = {
   defaultServer: {
-    host: 'http://localhost:18080',
+    host: 'http://api.brianxkliu.xyz',
   },
   dbhServer: {
-    host: 'http://localhost:8085',
+    host: 'http://dbh.brianxkliu.xyz',
   },
 };
 
