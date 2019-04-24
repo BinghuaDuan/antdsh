@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Row, Col } from 'antd';
+import {Layout, Row, Col, message} from 'antd';
 
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from "../../common/css/common.module.scss";
@@ -7,11 +7,22 @@ import AppSearch from '../component/AppSearch';
 import AppIncDecTable from "../component/AppIncDecTable";
 import mainDetailStyles from "../../common/css/mainDetail.module.scss";
 import AppRecommendCard from '../component/AppRecommendCard';
+import userService from "../../user/service/userService";
+import RESULTS from "../../common/constant/Result";
 
 const { Content } = Layout;
 
 
 class SearchPage extends Component {
+
+  state = {
+    username: null,
+  };
+
+  componentWillMount = async () => {
+    const username = await this.getUsername();
+    this.setState({ username });
+  };
 
   render() {
     return (
@@ -31,7 +42,7 @@ class SearchPage extends Component {
                     </div>
                   </Col>
                   <Col md={24} xl={8}>
-                    <AppRecommendCard></AppRecommendCard>
+                    <AppRecommendCard username={this.state.username}></AppRecommendCard>
                   </Col>
                 </Row>
               </div>
@@ -41,6 +52,20 @@ class SearchPage extends Component {
       </Layout>
     )
   }
+
+  getUsername = async () => {
+    const response = await userService.getUserInfo();
+    if (!response.ok) {
+      message.error(JSON.stringify(response));
+      return null;
+    }
+    const results = await response.json();
+    if (results.code !== RESULTS.DEFAULT_SUCC_CODE) {
+      message.info(JSON.stringify(results));
+      return null;
+    }
+    return results.username;
+  };
 }
 
 export default SearchPage

@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import { message } from 'antd';
 
 import appRecommendService from '../service/appRecommendService';
-import userService from '../../user/service/userService';
 import mainDetailStyles from "../../common/css/mainDetail.module.scss";
-import RESULTS from '../../common/constant/Result';
 import appRecommendCardStyles from '../css/appRecommendCard.module.scss';
 
+/**
+ * props: {
+ *   username: String  // required
+ * }
+ */
 class AppRecommendCard extends Component {
   state = {
-    username: null,
     recommendAppList: [],
     recommendAppInfoList: [],
   };
 
-  componentWillMount = async () => {
-    const username = await this.getUsername();
-    const recommendAppList = await this.getRecommendApps(username);
-    const recommendAppInfoList = await Promise.all(recommendAppList.map((val, idx) => this.getAppInfo(val)));
-    this.setState({ username, recommendAppList, recommendAppInfoList });
+  componentWillReceiveProps = async (nextProps, nextContext) => {
+    const username = nextProps.username;
+    if (username) {
+      const recommendAppList = await this.getRecommendApps(username);
+      const recommendAppInfoList = await Promise.all(recommendAppList.map((val, idx) => this.getAppInfo(val)));
+      this.setState({ recommendAppList, recommendAppInfoList });
+    }
   };
 
   render() {
@@ -76,47 +80,6 @@ class AppRecommendCard extends Component {
       return [];
     }
     return JSON.parse(results['likeapp']);
-  };
-
-  getUsername = async () => {
-    const response = await userService.getUserInfo();
-    if (!response.ok) {
-      message.error(JSON.stringify(response));
-      return null;
-    }
-    const results = await response.json();
-    if (results.code !== RESULTS.DEFAULT_SUCC_CODE) {
-      message.info(JSON.stringify(results));
-      return null;
-    }
-    return results.username;
-  };
-
-  setIncDecInfo = async () => {
-    const response = await appRecommendService.getIncdecInfo();
-    if (!response.ok) {
-      return message.error(JSON.stringify(response));
-    }
-    const data = await response.json();
-    if (data.length === 0) {
-      return;
-    }
-    let incDecUpdateTime = null;
-    let incInfo = [];
-    let decInfo = [];
-    for (let item of data) {
-      incDecUpdateTime = item['crawltime'];
-      if (item['incdectype'] === '+') {
-        incInfo.push(item);
-      }
-      else if (item['incdectype'] === '-') {
-        decInfo.push(item);
-      }
-      else {
-        console.error('setIncDecInfo item is not in [-, +]: ' + JSON.stringify(item));
-      }
-    }
-    this.setState({ incDecUpdateTime, incInfo, decInfo });
   };
 
 }
