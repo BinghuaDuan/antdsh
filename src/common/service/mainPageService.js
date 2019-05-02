@@ -14,8 +14,8 @@ mainPageService.mainHomeData = async (query) => {
             pid: 1,
             href: '/app/search',
             imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: 'App',
-            desc: '描述描述描述描述描述',
+            title: '外部服务变化感知器',
+            desc: '外部服务的功能-质量-价值变化感知',
           },
           {
             pid: 1,

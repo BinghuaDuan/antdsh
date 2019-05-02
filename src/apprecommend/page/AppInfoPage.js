@@ -136,7 +136,12 @@ class FunctionInfoChart extends Component {
     const updateVersion = functionInfoData[0]['updateversion'];
     const versionHtml = `<div>${updateVersion}</div>`
 
-    const data = functionInfoData;
+    const oldFuncData = [{
+      count: functionInfoData.length * 2,
+      updatefunction: "旧功能",
+      updateversion: "先前版本",
+    }];
+    const data = oldFuncData.concat(functionInfoData);
     dv.source(data).transform({
       type: "percent",
       field: "count",
@@ -276,12 +281,14 @@ class FunctionInfoCard extends Component {
   parseFunctionInfoData = (appFunctionInfoData) => {
     let resObj = {};
     for (let item of appFunctionInfoData) {
+      item['updatetime'] = item['updatetime'].split(' ')[0];
       const updateTime = item['updatetime'];
       const updateVersion = item['updateversion'];
       const updateFunctions = item['updatefunction'].split(',');
       resObj[updateTime] = [];
       for (let func of updateFunctions) {
         resObj[updateTime].push({
+          updatetime: updateTime,
           updateversion: updateVersion,
           updatefunction: func,
           count: 1, // 用于饼图计算百分比，使用相同比重
@@ -296,7 +303,7 @@ class FunctionInfoCard extends Component {
     resArr.sort((a, b) => {
       const dateA = new Date(a[0]['updatetime']);
       const dateB = new Date(b[0]['updatetime']);
-      return dateB - dateA;
+      return dateA - dateB;
     });
     return resArr;
   };
@@ -339,7 +346,7 @@ class AppInfoPage extends Component {
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item><a href={"/main/home"}>首页</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={"/app/search"}>App</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={"/app/search"}>外部服务变化感知器</a></Breadcrumb.Item>
             <Breadcrumb.Item>详情</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>

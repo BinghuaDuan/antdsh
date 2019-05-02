@@ -11,6 +11,12 @@ const getColumns = (title) => {
       dataIndex: 'appname',
       key: 'appname',
       render: text => <a href={`/app/info?appName=${text}`}>{text}</a>
+    },
+    {
+      title: '分类',
+      dataIndex: 'category',
+      key: 'category',
+      render: text => text
     }
   ]
 };
@@ -30,10 +36,10 @@ class AppIncDecTable extends Component {
   render() {
     return (
       <Row>
-        <Col span={12}>
+        <Col span={24}>
           <Table columns={getColumns('新增App')} dataSource={this.state.incInfo} />
         </Col>
-        <Col span={12}>
+        <Col span={24}>
           <Table columns={getColumns('退出App')} dataSource={this.state.decInfo} />
         </Col>
       </Row>

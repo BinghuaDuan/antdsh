@@ -12,54 +12,63 @@ const fakeResponse = {
           "id": 5,
           "appname": "用电脑发短信",
           "incdectype": "+",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 5,
+          "id": 6,
           "appname": "美团",
           "incdectype": "+",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 5,
+          "id": 7,
           "appname": "饿了么",
           "incdectype": "+",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 5,
+          "id": 8,
           "appname": "百度地图",
           "incdectype": "+",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 5,
+          "id": 9,
           "appname": "用电脑发短信",
           "incdectype": "+",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 6,
+          "id": 10,
           "appname": "聚旅游",
           "incdectype": "-",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 6,
+          "id": 11,
           "appname": "高德地图",
           "incdectype": "-",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 6,
+          "id": 12,
           "appname": "微信",
           "incdectype": "-",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
         {
-          "id": 6,
+          "id": 13,
           "appname": "京东",
           "incdectype": "-",
+          "category": "天气",
           "crawltime": "2019-04-17"
         },
       ]
@@ -304,7 +313,7 @@ appRecommendService.uploadTrackFile = async (username, trackFile) => {
 };
 
 appRecommendService.getUserTrackInfo = async (username) => {
-  if (appconfig.env === 'dev') return fakeResponse['getUserTrackInfo'];
+  if (appconfig.env === 'dev' || true) return fakeResponse['getUserTrackInfo'];
   const response = await fetch(`${defaultUrlPrefix}/infocollection/track/${username}`, {
     method: 'GET',
     credentials: 'include',
