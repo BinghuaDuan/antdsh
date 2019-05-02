@@ -67,12 +67,13 @@ class PopularityChart extends Component {
               type: "y"
             }}
           />
-          <Geom type="line" position="crawltime*popularity" size={2} />
+          <Geom type="line" position="crawltime*popularity" size={2} color={"#1DA57A"} />
           <Geom
             type="point"
             position="crawltime*popularity"
             size={4}
             shape={"circle"}
+            color={"#1DA57A"}
             style={{
               stroke: "#fff",
               lineWidth: 1
@@ -179,7 +180,16 @@ class FunctionInfoChart extends Component {
           <Geom
             type="intervalStack"
             position="percent"
-            color="updatefunction"
+            color={['count', (count) => {
+              // 新功能的count 全部是1，旧功能的count > 1(是新功能数量*2)
+              if (count < 2) {
+                return "#1DA57A";
+              }
+              // 旧功能的颜色
+              else {
+                return "#001529";
+              }
+            }]}
             style={{
               lineWidth: 1,
               stroke: "#fff"
@@ -284,7 +294,7 @@ class FunctionInfoCard extends Component {
       item['updatetime'] = item['updatetime'].split(' ')[0];
       const updateTime = item['updatetime'];
       const updateVersion = item['updateversion'];
-      const updateFunctions = item['updatefunction'].split(',');
+      const updateFunctions = Array.from( new Set( item['updatefunction'].split(',') ) );
       resObj[updateTime] = [];
       for (let func of updateFunctions) {
         resObj[updateTime].push({
