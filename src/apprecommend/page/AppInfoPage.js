@@ -67,13 +67,13 @@ class PopularityChart extends Component {
               type: "y"
             }}
           />
-          <Geom type="line" position="crawltime*popularity" size={2} color={"#1DA57A"} />
+          <Geom type="line" position="crawltime*popularity" size={2} color={"#1890ff"} />
           <Geom
             type="point"
             position="crawltime*popularity"
             size={4}
             shape={"circle"}
-            color={"#1DA57A"}
+            color={"#1890ff"}
             style={{
               stroke: "#fff",
               lineWidth: 1
@@ -183,7 +183,7 @@ class FunctionInfoChart extends Component {
             color={['count', (count) => {
               // 新功能的count 全部是1，旧功能的count > 1(是新功能数量*2)
               if (count < 2) {
-                return "#1DA57A";
+                return "#1890ff";
               }
               // 旧功能的颜色
               else {
