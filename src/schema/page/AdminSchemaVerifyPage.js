@@ -191,7 +191,7 @@ class AdminSchemaVerifyPage extends Component {
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>管理</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_VERIFY}>审核</a></Breadcrumb.Item>
           </Breadcrumb>
-          <div style={{ background: '#f8f9fa', padding: 24, minHeight: '100%' }}>
+          <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>

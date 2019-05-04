@@ -24,7 +24,7 @@ class AdminSchemaMainPage extends Component {
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>模板</Breadcrumb.Item>
           </Breadcrumb>
-          <div style={{ background: '#f8f9fa', padding: 24, height: '100%' }}>
+          <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>

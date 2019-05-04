@@ -196,7 +196,7 @@ class SchemaListPage extends Component {
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST}>列表</a></Breadcrumb.Item>
           </Breadcrumb>
-          <div style={{ background: '#f8f9fa', padding: 24, height: '100%' }}>
+          <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <SchemaInfoTabel data={this.state.schemaInfoData} updateData={this.setSchemaInfoData}/>
