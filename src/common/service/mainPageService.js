@@ -8,39 +8,38 @@ mainPageService.mainHomeData = async (query) => {
     json: () => [
       {
         cid: 1,
-        label: '推荐',
+        label: '导航',
         products: [
           {
             pid: 1,
-            href: '/app/search',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '外部服务变化感知器',
-            desc: '外部服务的功能-质量-价值变化感知',
+            href: '/schema',
+            imgSrc: "/images/R.png",
+            title: '模板',
+            desc: '服务资源模板',
+          },
+          {
+            pid: 1,
+            href: 'http://localhost:11002/browser/',
+            imgSrc: "/images/M.png",
+            title: '资源',
+            desc: '服务资源浏览',
           },
           {
             pid: 1,
             href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
+            imgSrc: "/images/T.png",
+            title: '待定',
+            desc: '该模块将在后续扩展',
           },
           {
             pid: 1,
             href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "https://product-upload-picture.bj.bcebos.com/naisinike/076972b8-c5f0-4d87-911b-c62e1e69c25f/v1baidu_150x112.png",
-            title: '标题',
-            desc: '描述描述描述描述描述',
+            imgSrc: "/images/T.png",
+            title: '待定',
+            desc: '该模块将在后续扩展',
           },
         ]
       },
-
     ]
   }
 };

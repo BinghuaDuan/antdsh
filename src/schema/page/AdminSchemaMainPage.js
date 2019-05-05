@@ -14,21 +14,21 @@ class AdminSchemaMainPage extends Component {
     const listSchemaCardData = {
       href: SCHEMA_CONST.HREF.ADMIN_LIST,
       imgSrc: "/images/menu.png",
-      title: "管理",
-      desc: "模板管理",
+      title: "列表",
+      desc: "查看服务资源模板列表",
     };
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>模板</Breadcrumb.Item>
+            <Breadcrumb.Item>模板管理</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>模板</div>
+                  <div className={commonStyles.cardTitle}>服务资源模板管理</div>
                   <div>
                     <CommonProductCard data={listSchemaCardData} />
                   </div>

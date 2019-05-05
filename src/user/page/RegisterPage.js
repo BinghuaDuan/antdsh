@@ -46,10 +46,8 @@ class RegisterPage extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       return message.info(JSON.stringify(results));
     }
-    console.log(results);
     message.info('注册成功!');
     await userService.login(username, password);
-    console.log('denglu');
     this.setState({ redirectToReferrer: true });
   };
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Row, Col } from 'antd';
 
 import UserInfoBox from './UserInfoBox';
+import APP_CONFIG from '../../appconfig';
 
 const { Header } = Layout;
 
@@ -13,7 +14,8 @@ const { Header } = Layout;
 class MenuHeader extends Component {
 
   render() {
-    const defaultSelectedKey = this.props.defaultSelectedKey || '1';
+    // const defaultSelectedKey = this.props.defaultSelectedKey || '1';
+    const defaultSelectedKey = '1';
     return (
       <Header>
         <Row>
@@ -25,8 +27,9 @@ class MenuHeader extends Component {
               style={{ lineHeight: '64px' }}
               onClick={this.handleClickMenu}
             >
-              <Menu.Item key="1">首页</Menu.Item>
-              <Menu.Item key="2">模板</Menu.Item>
+              <Menu.Item key="1">服务资源库 V1.0</Menu.Item>
+              {/*<Menu.Item key="2">模板</Menu.Item>*/}
+              {/*<Menu.Item key="3">资源</Menu.Item>*/}
             </Menu>
           </Col>
           <Col span={4}>
@@ -44,8 +47,11 @@ class MenuHeader extends Component {
     if (key === '1') {
       window.location = '/main/home';
     }
-    if (key === '2') {
+    else if (key === '2') {
       window.location = '/schema';
+    }
+    else if (key === '3') {
+      window.location = APP_CONFIG.neo4jBrowserUrl;
     }
   };
 }

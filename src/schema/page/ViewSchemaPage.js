@@ -10,6 +10,7 @@ import schemaService from '../service/SchemaService';
 import RESULT from '../../common/constant/Result';
 import SCHEMA_CONST from "../constant/SchemaConstant";
 import OWL_CONST from '../constant/OwlConstant';
+import APP_CONFIG from '../../appconfig';
 
 const { Content } = Layout;
 
@@ -106,7 +107,7 @@ class ViewSchemaPage extends Component {
       }
     }
     const prevewJsonStr = JSON.stringify(previewJson, null ,4);
-    let previewStr = `**资源输入格式预览** \n\n`;
+    let previewStr = `**资源上传接口** \`[POST] ${APP_CONFIG.defaultServer.host}/resource/user/new\` \n\n**资源上传格式预览** \n\n`;
     previewStr += "```\n" + prevewJsonStr + "\n```";
     return { __html: md.render(previewStr) };
   };

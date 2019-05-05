@@ -1,67 +1,68 @@
 import React, { Component } from 'react';
 import { message } from 'antd';
-import { Redirect } from 'react-router-dom';
 
 import userService from "../../user/service/userService";
 import RESULT from "../constant/Result";
 import CODES from "../constant/Codes";
+import APP_CONFIG from '../../appconfig';
 
 
-/**
- * props: {
- *   defaultSelectedKey: String // required 1, 2  默认选择的菜单
- * }
- */
 class UserInfoBox extends Component {
 
   state = {
     username: "",
     perms: [],
     roles: [],
-    redirectToReferrer: false,
-    from: "/user/login",
+    isLoggedIn: false,
   };
 
   componentWillMount = async () => {
     const isLoggedIn = await this.isLoggedIn();
-    if (!isLoggedIn) window.location = '/user/login';
+    this.setState({ isLoggedIn })
   };
 
   render() {
-    let from = this.state.from;
+    const { isLoggedIn, username } = this.state;
 
-    if (this.state.redirectToReferrer) {
-      return <Redirect to={from} />
+    if (!isLoggedIn) {
+      return (
+        <div style={{color: 'white'}}>
+          <a href={`${APP_CONFIG.defaultServer.host}/security`}>登录</a>
+          /
+          <a href={'/user/register'}>注册</a>
+        </div>
+      )
     }
-
-    return (
-      <div style={{color: 'white'}}>
-        您以 <a onClick={this.handleUserInfo}>{this.state.username}</a> 登录
-        (<a onClick={this.logout}>退出</a>)
-      </div>
-    )
+    else {
+      return (
+        <div style={{color: 'white'}}>
+          您以 <a onClick={this.handleUserInfo}>{username}</a> 登录
+          (<a onClick={this.logout}>退出</a>)
+        </div>
+      )
+    }
   }
 
   handleUserInfo = () => {
     const adminRole = 'admin';
     const roles = this.state.roles;
-    console.log(roles);
-    console.log(roles.includes(adminRole));
     if (roles.includes(adminRole)) {
       // 跳转管理员界面
-      this.setState({
-        from: '/schema/admin',
-        redirectToReferrer: true,
-      });
+      window.location = '/schema/admin';
     }
     else {
       // TODO 跳转用户界面
     }
   };
 
+  login = async () => {
+    window.location = `${APP_CONFIG.defaultServer.host}/security`;
+  };
+
+
   logout = async () => {
-    await userService.logout();
-    this.setState({redirectToReferrer: true});
+    window.open(APP_CONFIG.casServer.logoutUrl);
+    window.location = '/main/home';
   };
 
   /**
@@ -78,12 +79,12 @@ class UserInfoBox extends Component {
     const results = await response.json();
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       if (results.code === CODES.UNAUTHEN) {
-        message.info('用户未登录');
+        console.info('用户未登录');
       }
       else {
         message.error(JSON.stringify(results));
       }
-      return false
+      return false;
     }
     this.setState({
       username: results.username,
@@ -92,7 +93,6 @@ class UserInfoBox extends Component {
     });
     return true;
   };
-
 }
 
 export default UserInfoBox
