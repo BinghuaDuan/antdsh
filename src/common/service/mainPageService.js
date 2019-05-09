@@ -6,37 +6,146 @@ mainPageService.mainHomeData = async (query) => {
   return {
     ok: true,
     json: () => [
+      // {
+      //   cid: 1,
+      //   label: '导航',
+      //   products: [
+      //     {
+      //       pid: 1,
+      //       href: '/schema',
+      //       imgSrc: "/images/R-blue.png",
+      //       title: '模板',
+      //       desc: '服务资源模板',
+      //     },
+      //     {
+      //       pid: 1,
+      //       href: 'http://192.168.1.118:17474/browser/',
+      //       imgSrc: "/images/M-blue.png",
+      //       title: '资源',
+      //       desc: '服务资源浏览',
+      //     },
+      //     {
+      //       pid: 1,
+      //       href: '/main/detail/1',
+      //       imgSrc: "/images/T-blue.png",
+      //       title: '待定',
+      //       desc: '该模块将在后续扩展',
+      //     },
+      //     {
+      //       pid: 1,
+      //       href: '/main/detail/1',
+      //       imgSrc: "/images/T-blue.png",
+      //       title: '待定',
+      //       desc: '该模块将在后续扩展',
+      //     },
+      //   ]
+      // },
       {
         cid: 1,
-        label: '导航',
+        label: '跨界服务的质量的实时感知器',
         products: [
           {
             pid: 1,
             href: '/schema',
-            imgSrc: "/images/R.png",
-            title: '模板',
-            desc: '服务资源模板',
+            imgSrc: "/images/1-blue.png",
+            title: '配置',
+            // desc: '服务资源模板',
+            target: 'shishiganzhiqi',
           },
           {
             pid: 1,
-            href: 'http://localhost:11002/browser/',
-            imgSrc: "/images/M.png",
-            title: '资源',
-            desc: '服务资源浏览',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "/images/T.png",
-            title: '待定',
-            desc: '该模块将在后续扩展',
+            href: 'http://192.168.1.118:17474/browser/',
+            imgSrc: "/images/2-blue.png",
+            title: '感知',
+            // desc: '服务资源浏览',
+            target: 'shishiganzhiqi',
           },
           {
             pid: 1,
             href: '/main/detail/1',
-            imgSrc: "/images/T.png",
+            imgSrc: "/images/3-blue.png",
+            title: '生成结果',
+            // desc: '该模块将在后续扩展',
+            target: 'shishiganzhiqi',
+          },
+          {
+            pid: 1,
+            href: 'http://192.168.1.118:17474/browser/',
+            imgSrc: "/images/wait.png",
             title: '待定',
-            desc: '该模块将在后续扩展',
+            desc: '功能将在后续扩展',
+            target: 'neo4j',
+          },
+        ]
+      },
+      {
+        cid: 2,
+        label: '外部服务感知器',
+        products: [
+          {
+            pid: 1,
+            href: '/app/search',
+            imgSrc: "/images/F-blue.png",
+            title: '功能-质量-价值变化感知器',
+            // desc: '服务资源模板',
+            target: 'bianhuaganzhiqi',
+          },
+          {
+            pid: 1,
+            href: 'http://60.205.188.102:9901',
+            imgSrc: "/images/V-blue.png",
+            title: '价值与质量事件感知器',
+            // desc: '服务资源浏览',
+            target: 'shijianganzhiqi',
+          },
+          {
+            pid: 1,
+            href: '/schema',
+            imgSrc: "/images/wait.png",
+            title: '待定',
+            desc: '功能将在后续扩展',
+          },
+          {
+            pid: 1,
+            href: '/schema',
+            imgSrc: "/images/wait.png",
+            title: '待定',
+            desc: '功能将在后续扩展',
+          },
+        ]
+      },
+      {
+        cid: 1,
+        label: '面向质量与价值问题的跨界服务演化工具',
+        products: [
+          {
+            pid: 1,
+            href: '/schema',
+            imgSrc: "/images/T-blue.png",
+            title: '工具',
+            // desc: '服务资源模板',
+            target: 'yanhuagongju',
+          },
+          {
+            pid: 1,
+            href: '/schema',
+            imgSrc: "/images/wait.png",
+            title: '待定',
+            desc: '功能将在后续扩展',
+          },
+          {
+            pid: 1,
+            href: '/schema',
+            imgSrc: "/images/wait.png",
+            title: '待定',
+            desc: '功能将在后续扩展',
+          },
+          {
+            pid: 1,
+            href: '/schema',
+            imgSrc: "/images/wait.png",
+            title: '待定',
+            desc: '功能将在后续扩展',
           },
         ]
       },

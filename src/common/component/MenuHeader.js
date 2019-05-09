@@ -27,7 +27,7 @@ class MenuHeader extends Component {
               style={{ lineHeight: '64px' }}
               onClick={this.handleClickMenu}
             >
-              <Menu.Item key="1">服务资源库 V1.0</Menu.Item>
+              <Menu.Item key="1">首页</Menu.Item>
               {/*<Menu.Item key="2">模板</Menu.Item>*/}
               {/*<Menu.Item key="3">资源</Menu.Item>*/}
             </Menu>
