@@ -16,11 +16,11 @@ class ProductCard extends Component {
   render() {
     const data = this.props.data;
     return (
-      <Col sm={12} md={8} xl={6} key={`products-${Math.random()}`}>
+      <Col sm={24} xl={12} key={`products-${Math.random()}`}>
         <a className={productCardStyles.card} href={data.href} target={data.target}>
-          <div className={productCardStyles.cardImg}>
-            <img src={data.imgSrc} alt={data.title}></img>
-          </div>
+          {/*<div className={productCardStyles.cardImg}>*/}
+          {/*  <img src={data.imgSrc} alt={data.title}></img>*/}
+          {/*</div>*/}
           <div className={productCardStyles.cardTitle}>
             {data.title}
           </div>
