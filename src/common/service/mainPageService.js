@@ -101,7 +101,7 @@ mainPageService.mainHomeData = async (query) => {
           {
             pid: 1,
             href: 'http://60.205.188.102:8085/',
-            title: '面向需求演化的边缘服务器的动态自演化工具',
+            title: '面向质量与价值问题的跨界服务演化工具',
             desc: '系统面向边缘服务计算场景中人群移动所带来的需求动态演化问题，以保障用户服务SLA 及高可用性为目标，按照指定方式提供边缘节点自演化策略。',
             target: 'yanhuagongju',
           },
