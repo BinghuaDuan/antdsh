@@ -35,12 +35,12 @@ class TrackFileCard extends Component {
     return (
       <div className={mainDetailStyles.card}>
         <div className={appRecommendCardStyles.detailRelated}>
-          <h2>用户轨道</h2>
+          <h2>用户服务偏好</h2>
           <br/>
           <TrackFileUploadForm username={username} />
           <br/>
           <Button onClick={this.handleShowUserTrack}>
-            查看用户轨道
+            查看用户服务偏好
           </Button>
           <TrackModal visible={trackModalVisible} userTrackInfo={userTrackInfo} onOk={this.hideTrackModal}></TrackModal>
         </div>
@@ -58,7 +58,7 @@ class TrackFileCard extends Component {
       });
     }
     else {
-      message.info(`用户未上传轨道文件`);
+      message.info(`用户未上传服务偏好文件`);
     }
   };
 
@@ -123,7 +123,7 @@ class TrackModal extends Component {
     return (
       <Modal
         visible={visible}
-        title={'用户轨道图'}
+        title={'用户服务偏好图'}
         okText={'确定'}
         cancelText={'取消'}
         onOk={onOk}

@@ -68,7 +68,7 @@ mainPageService.mainHomeData = async (query) => {
             pid: 1,
             href: '/demo/keywordsearch',
             title: '面向跨界异构服务融合的服务资源库',
-            desc: '面向跨界异构服务融合，利用众包方式构建服务资源库，平台在实现异构服务融合之外，提供知识图谱表示方法以及相关的服务建索方法。',
+            desc: '面向跨界异构服务融合，利用众包方式构建服务资源库，平台在实现异构服务融合之外，提供知识图谱表示方法以及相关的服务检索方法。',
             target: 'bianhuaganzhiqi',
           },
           {

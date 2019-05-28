@@ -356,7 +356,7 @@ class AppInfoPage extends Component {
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item><a href={"/main/home"}>首页</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={"/app/search"}>外部服务变化感知器</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={"/app/search"}>互联网服务应用功能-质量-价值变化感知器</a></Breadcrumb.Item>
             <Breadcrumb.Item>详情</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>

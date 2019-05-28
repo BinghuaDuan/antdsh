@@ -29,7 +29,7 @@ class AppRecommendCard extends Component {
     return (
       <div className={mainDetailStyles.card}>
         <div className={appRecommendCardStyles.detailRelated}>
-          <h2>推荐App</h2>
+          <h2>推荐移动服务</h2>
           {this.renderRecommendApps()}
         </div>
       </div>

@@ -11,7 +11,7 @@ class AppSearch extends Component {
     return (
       <Search
         size={"large"}
-        placeholder="请输入App 名"
+        // placeholder="请输入移动服务"
         onSearch={this.handleSearch}
         enterButton
       />

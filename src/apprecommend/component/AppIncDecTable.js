@@ -37,10 +37,10 @@ class AppIncDecTable extends Component {
     return (
       <Row>
         <Col span={24}>
-          <Table columns={getColumns('新增App')} dataSource={this.state.incInfo} />
+          <Table columns={getColumns('新增移动服务')} dataSource={this.state.incInfo} />
         </Col>
         <Col span={24}>
-          <Table columns={getColumns('退出App')} dataSource={this.state.decInfo} />
+          <Table columns={getColumns('退出移动服务')} dataSource={this.state.decInfo} />
         </Col>
       </Row>
     )
