@@ -42,8 +42,8 @@ class SchemaMainPage extends Component {
                 <div className={commonStyles.card}>
                   <div className={commonStyles.cardTitle}>面向跨界异构服务融合的服务资源库</div>
                   <div>
-                    <CommonProductCard data={listSchemaCardData} />
                     <CommonProductCard data={newSchemaCardData} />
+                    <CommonProductCard data={listSchemaCardData} />
                     <CommonProductCard data={browserCardData} />
                   </div>
                 </div>
