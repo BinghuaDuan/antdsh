@@ -15,7 +15,7 @@ class KeywordSearchPage extends Component {
   };
 
   setQueryUri = (value) => {
-    let queryUri = `match (n)-[r]-(m) where n.name =~ '.*${value}.*' return n,m limit 25;`;
+    let queryUri = `match (n)-[r]-(m)-[]-(k) where n.name =~ '.*${value}.*' return n,m,k limit 25;`;
     this.setState({ queryUri });
   };
 
