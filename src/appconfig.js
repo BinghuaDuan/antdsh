@@ -1,4 +1,4 @@
-const env = 'test';
+const env = 'prod';
 
 const appconfig = {};
 
@@ -35,7 +35,7 @@ appconfig.prod = {
     host: 'http://ices.beim.site:18080',
   },
   dbhServer: {
-    host: 'http://dbh.brianxkliu.xyz',
+    host: 'http://60.205.188.102:8088',
   },
   casServer: {
     host: 'https://cas.server.com:18443/cas',
