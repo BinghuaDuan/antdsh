@@ -34,13 +34,13 @@ class SchemaMainPage extends Component {
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>首页</Breadcrumb.Item>
-            <Breadcrumb.Item>面向跨界异构服务融合的服务资源库</Breadcrumb.Item>
+            <Breadcrumb.Item>面向异构服务融合的服务资源库</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>面向跨界异构服务融合的服务资源库</div>
+                  <div className={commonStyles.cardTitle}>面向异构服务融合的服务资源库</div>
                   <div>
                     <CommonProductCard data={newSchemaCardData} />
                     <CommonProductCard data={listSchemaCardData} />

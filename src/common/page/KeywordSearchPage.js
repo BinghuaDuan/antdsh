@@ -27,7 +27,7 @@ class KeywordSearchPage extends Component {
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>首页</Breadcrumb.Item>
-            <Breadcrumb.Item>面向跨界异构服务融合的服务资源库</Breadcrumb.Item>
+            <Breadcrumb.Item>面向异构服务融合的服务资源库</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
