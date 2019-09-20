@@ -1,4 +1,4 @@
-const env = 'test';
+const env = 'dev';
 
 const appconfig = {};
 
@@ -10,7 +10,7 @@ appconfig.dev = {
     host: 'http://dbh.brianxkliu.xyz',
   },
   casServer: {
-    host: 'https://cas.server.com:8443/cas',
+    host: 'https://ices.beim.site:18443/cas',
   },
   neo4jBrowserUrl: "http://localhost:11002/browser/",
 };
