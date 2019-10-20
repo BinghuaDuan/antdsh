@@ -19,7 +19,7 @@ mainPageService.mainHomeData = async (query) => {
           },
           {
             pid: 1,
-            href: 'http://localhost:11002/browser/',
+            href: 'http://39.106.69.57:7474/browser/',
             imgSrc: "/images/M.png",
             title: '资源',
             desc: '服务资源浏览',

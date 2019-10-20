@@ -27,7 +27,7 @@ class UserInfoBox extends Component {
     if (!isLoggedIn) {
       return (
         <div style={{color: 'white'}}>
-          <a href={`${APP_CONFIG.defaultServer.host}/security`}>登录</a>
+          <a href={`/user/login`}>登录</a>
           /
           <a href={'/user/register'}>注册</a>
         </div>
@@ -55,13 +55,8 @@ class UserInfoBox extends Component {
     }
   };
 
-  login = async () => {
-    window.location = `${APP_CONFIG.defaultServer.host}/security`;
-  };
-
-
   logout = async () => {
-    window.open(APP_CONFIG.casServer.logoutUrl);
+    userService.logout()
     window.location = '/main/home';
   };
 

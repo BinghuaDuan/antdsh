@@ -9,10 +9,7 @@ appconfig.dev = {
   dbhServer: {
     host: 'http://dbh.brianxkliu.xyz',
   },
-  casServer: {
-    host: 'https://ices.beim.site:18443/cas',
-  },
-  neo4jBrowserUrl: "http://localhost:11002/browser/",
+  neo4jBrowserUrl: "http://39.106.69.57:7474/browser/",
 };
 
 appconfig.test = {
@@ -22,11 +19,7 @@ appconfig.test = {
   dbhServer: {
     host: 'http://dbh.brianxkliu.xyz',
   },
-  casServer: {
-    host: 'https://cas.server.com:8443/cas',
-    logoutUrl: 'https://cas.server.com:8443/cas/logout',
-  },
-  neo4jBrowserUrl: "http://localhost:11002/browser/",
+  neo4jBrowserUrl: "http://39.106.69.57:7474/browser/",
 };
 
 appconfig.prod = {
@@ -36,10 +29,7 @@ appconfig.prod = {
   dbhServer: {
     host: 'http://dbh.brianxkliu.xyz',
   },
-  casServer: {
-    host: 'https://cas.server.com:8443/cas',
-  },
-  neo4jBrowserUrl: "http://localhost:11002/browser/",
+  neo4jBrowserUrl: "http://39.106.69.57:7474/browser/",
 };
 
 export default Object.assign(appconfig[env], { env })
