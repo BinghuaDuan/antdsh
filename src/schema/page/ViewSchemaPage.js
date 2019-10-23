@@ -84,11 +84,15 @@ class ViewSchemaPage extends Component {
   getRawMarkup = () => {
     const md = new Remarkable();
     const schemaJson = this.state.schemaJson;
-    const previewJson = [];
+    const previewJsonData = [];
+    const previewJson = {
+      "sid": this.getQuery()["sid"],
+      "data": previewJsonData
+    };
     for (let classNameUri in schemaJson) {
       let className = classNameUri.slice(1);
       let previewJsonObj = {"label": className};
-      previewJson.push(previewJsonObj);
+      previewJsonData.push(previewJsonObj);
       let classObj = schemaJson[classNameUri];
       console.log(classObj);
       console.log(OWL_CONST.KEYS.DATATYPE_PROPERTY in classObj);
