@@ -17,7 +17,7 @@ class ProductCard extends Component {
     const data = this.props.data;
     return (
       <Col sm={12} md={8} xl={6} key={`products-${Math.random()}`}>
-        <a className={productCardStyles.card} href={data.href}>
+        <a className={productCardStyles.card} href={data.href} onClick={data.onClick}>
           <div className={productCardStyles.cardImg}>
             <img src={data.imgSrc} alt={data.title}></img>
           </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb, message, Row, Col } from 'antd';
 import Remarkable from 'remarkable';
-import querystring from 'querystring';
 
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
@@ -11,6 +10,8 @@ import RESULT from '../../common/constant/Result';
 import SCHEMA_CONST from "../constant/SchemaConstant";
 import OWL_CONST from '../constant/OwlConstant';
 import APP_CONFIG from '../../appconfig';
+import commonUtil from "../../common/utils/commonUtil";
+
 
 const { Content } = Layout;
 
@@ -20,18 +21,19 @@ class ViewSchemaPage extends Component {
   state = {
     sname: "",
     sid: "",
+    gid: "",
     owl: undefined,
     schemaJson: undefined,
   };
 
   componentWillMount() {
-    const sname = this.getQuery()['sname'];
-    const sid = this.getQuery()['sid'];
+    const {sname, sid, gid} = commonUtil.getQuery();
     this.setState({
       sname,
       sid,
+      gid,
     });
-    this.setOwlState(sid);
+    this.setOwlState(sid, gid);
   }
 
   render() {
@@ -41,8 +43,8 @@ class ViewSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST}>列表</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
             <Breadcrumb.Item>查看</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
@@ -86,7 +88,7 @@ class ViewSchemaPage extends Component {
     const schemaJson = this.state.schemaJson;
     const previewJsonData = [];
     const previewJson = {
-      "sid": this.getQuery()["sid"],
+      "sid": this.state.sid,
       "data": previewJsonData
     };
     for (let classNameUri in schemaJson) {
@@ -120,8 +122,8 @@ class ViewSchemaPage extends Component {
     this.setState({ schemaJson });
   };
 
-  setOwlState = async (sid) => {
-    const response = await schemaService.getSchemaInOwl(sid);
+  setOwlState = async (sid, gid) => {
+    const response = await schemaService.getSchemaInOwl(sid, gid);
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }
@@ -131,16 +133,6 @@ class ViewSchemaPage extends Component {
     }
     const owl = JSON.parse(results.data);
     this.setState({ owl });
-  };
-
-  getQuery = () => {
-    let search = this.props.location.search;
-    if (search === "") {
-      message.info('模板名未指定');
-      return;
-    }
-    search = search.split('?')[1];
-    return querystring.parse(search);
   };
 
   handleOwlChange = (owl) => {

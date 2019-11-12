@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb, Button, message } from 'antd';
+
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
 import SchemaTree from '../component/SchemaTree';
 import schemaService from '../service/SchemaService';
 import RESULT from '../../common/constant/Result';
-import querystring from 'querystring';
 import SCHEMA_CONST from "../constant/SchemaConstant";
+import commonUtil from "../../common/utils/commonUtil";
 
 const { Content } = Layout;
 
@@ -15,21 +16,22 @@ class EditSchemaPage extends Component {
   state = {
     sname: "",
     sid: "",
+    gid: "",
     owl: undefined,
   };
 
   componentWillMount() {
-    const sname = this.getQuery()['sname'];
-    const sid = this.getQuery()['sid'];
+    const {sname, sid, gid} = commonUtil.getQuery();
     this.setState({
       sname,
       sid,
+      gid,
     });
-    this.setOwlState(sid);
+    this.setOwlState(sid, gid);
   }
 
-  setOwlState = async (sid) => {
-    const response = await schemaService.getSchemaInOwl(sid);
+  setOwlState = async (sid, gid) => {
+    const response = await schemaService.getSchemaInOwl(sid, gid);
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }
@@ -39,17 +41,6 @@ class EditSchemaPage extends Component {
     }
     const owl = JSON.parse(results.data);
     this.setState({ owl });
-  };
-
-
-  getQuery = () => {
-    let search = this.props.location.search;
-    if (search === "") {
-      message.info('模板名未指定');
-      return;
-    }
-    search = search.split('?')[1];
-    return querystring.parse(search);
   };
 
   handleOwlChange = (owl) => {
@@ -82,8 +73,8 @@ class EditSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST}>列表</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
             <Breadcrumb.Item>编辑</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>

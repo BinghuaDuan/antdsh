@@ -5,6 +5,7 @@ import commonStyles from '../../common/css/common.module.scss';
 import schemaService from '../service/SchemaService';
 import RESULT from "../../common/constant/Result";
 import SCHEMA_CONST from "../constant/SchemaConstant";
+import commonUtil from "../../common/utils/commonUtil";
 
 const { Content } = Layout;
 
@@ -30,31 +31,35 @@ class SchemaInfoTabel extends Component {
   };
 
   renderAction = (text, record) => {
+    const sname = record.sname;
+    const gid = record.gid;
+    const sid = record.sid;
+    const status = record.status;
     if (['0'].includes(record.status)) {
       return (
         <span>
-          <a href={`/schema/edit?sname=${record.sname}&sid=${record.sid}`}>修改</a>
+          <a href={`/schema/edit?sname=${sname}&sid=${sid}&gid=${gid}`}>修改</a>
           <span> | </span>
-          <a onClick={this.confirmMatch.bind(this, record.sid)}>确认匹配</a>
+          <a onClick={this.confirmMatch.bind(this, sid)}>确认匹配</a>
         </span>
       )
     }
-    else if (['1', '2', '3', '4'].includes(record.status)) {
+    else if (['1', '2', '3', '4'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${record.sname}&sid=${record.sid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
         </span>
       )
     }
-    else if (['5'].includes(record.status)) {
+    else if (['5'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${record.sname}&sid=${record.sid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
         </span>
       )
     }
     else {
-      console.log(`record.status = ${record.status}`);
+      console.log(`status = ${status}`);
     }
   };
 
@@ -156,45 +161,27 @@ class SchemaInfoTabel extends Component {
 class SchemaListPage extends Component {
 
   state = {
+    gid: "",
     schemaInfoData: [],
   };
 
-  componentDidMount = () => {
-    this.setSchemaInfoData();
-
-  };
-
-  setSchemaInfoData = async () => {
-    const response = await schemaService.getSchemaInfo();
-    if (!response.ok) {
-      return message.info(JSON.stringify(response));
-    }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      return message.info(JSON.stringify(results));
-    }
-    const schemaInfoData = results.data.map((val, idx) => {
-      return {
-        key: `schemaInfoTableDataKey${idx}`,
-        sid: val.sid,
-        sname: val.sname,
-        status: val.status + '',
-        updated: new Date(val.updated),
-        action: val.status,
-      }
+  componentDidMount() {
+    const {gid} = commonUtil.getQuery();
+    this.setState({
+      gid,
     });
-    this.setState({ schemaInfoData });
+    this.setSchemaInfoData();
   };
+
 
   render() {
-
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST}>列表</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
@@ -208,6 +195,32 @@ class SchemaListPage extends Component {
       </Layout>
     )
   }
+
+  setSchemaInfoData = async () => {
+    const gid = commonUtil.getQueryVal('gid');
+    const response = await schemaService.getSchemaInfo(gid);
+    if (!response.ok) {
+      return message.info(JSON.stringify(response));
+    }
+    const results = await response.json();
+    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
+      return message.info(JSON.stringify(results));
+    }
+    const schemaInfoData = results.data.map((val, idx) => {
+      return {
+        key: `schemaInfoTableDataKey${idx}`,
+        sid: val.sid,
+        gid: val.gid,
+        sname: val.sname,
+        status: val.status + '',
+        updated: new Date(val.updated),
+        action: val.status,
+      }
+    });
+    this.setState({ schemaInfoData });
+  };
+
+
 }
 
 export default SchemaListPage;

@@ -8,6 +8,7 @@ import adminSchemaService from '../service/AdminSchemaService';
 import RESULT from '../../common/constant/Result';
 import querystring from 'querystring';
 import SCHEMA_CONST from "../constant/SchemaConstant";
+import commonUtil from "../../common/utils/commonUtil";
 
 const { Content } = Layout;
 
@@ -74,18 +75,18 @@ class AdminSchemaVerifyPage extends Component {
   };
 
   componentWillMount() {
-    const sname = this.getQuery()['sname'];
-    const sid = this.getQuery()['sid'];
+    const {sname, sid, gid} = commonUtil.getQuery();
     this.setState({
       sname,
       sid,
+      gid,
     });
-    this.setOwlState(sid);
+    this.setOwlState(sid, gid);
     this.setMatchTableData(sid);
   }
 
-  setOwlState = async (sid) => {
-    const response = await schemaService.getSchemaInOwl(sid);
+  setOwlState = async (sid, gid) => {
+    const response = await schemaService.getSchemaInOwl(sid, gid);
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }

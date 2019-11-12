@@ -1,47 +1,45 @@
 // main page service
+import appconfig from '../../appconfig'
+import {message} from "antd";
+
+const defaultUrlPrefix = appconfig['defaultServer']['host'];
 
 const mainPageService = {};
 
-mainPageService.mainHomeData = async (query) => {
-  return {
-    ok: true,
-    json: () => [
-      {
-        cid: 1,
-        label: '导航',
-        products: [
-          {
-            pid: 1,
-            href: '/schema',
-            imgSrc: "/images/R.png",
-            title: '模板',
-            desc: '服务资源模板',
-          },
-          {
-            pid: 1,
-            href: 'http://39.106.69.57:7474/browser/',
-            imgSrc: "/images/M.png",
-            title: '资源',
-            desc: '服务资源浏览',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "/images/T.png",
-            title: '待定',
-            desc: '该模块将在后续扩展',
-          },
-          {
-            pid: 1,
-            href: '/main/detail/1',
-            imgSrc: "/images/T.png",
-            title: '待定',
-            desc: '该模块将在后续扩展',
-          },
-        ]
-      },
-    ]
+mainPageService.applyGspace = async (name) => {
+  const response = await fetch(`${defaultUrlPrefix}/gspace/apply`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      name
+    })
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
   }
+  return await response.json();
+};
+
+mainPageService.getGspaceInfo = async () => {
+  const response = await fetch(`${defaultUrlPrefix}/gspace/info`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
 };
 
 mainPageService.productDetailData = async (pid) => {

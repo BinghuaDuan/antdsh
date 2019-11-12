@@ -6,6 +6,7 @@ import SchemaTree from '../component/SchemaTree';
 import schemaService from '../service/SchemaService';
 import RESULT from '../../common/constant/Result';
 import SCHEMA_CONST from "../constant/SchemaConstant";
+import commonUtil from "../../common/utils/commonUtil";
 
 const { Content } = Layout;
 
@@ -94,43 +95,16 @@ class NewSchemaPage extends Component {
   state = {
     sname: "",
     owl: undefined,
+    gid: "",
   };
 
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+  componentDidMount() {
+    const {gid} = commonUtil.getQuery();
     this.setState({
-      [name]: value,
+      gid,
     });
-  };
+  }
 
-  handleOwlChange = (owl) => {
-    this.setState({owl});
-  };
-
-  handleSave = async () => {
-    const owl = this.state.owl;
-    const sname = this.state.sname;
-    if (owl === undefined) {
-      return message.info('请添加类');
-    };
-    if (sname === "") {
-      return message.info("请输入模板名");
-    }
-    const response = await schemaService.newSchema(owl, "JSON-LD", sname);
-    if (!response.ok) {
-      return message.error(JSON.stringify(response));
-    }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      return message.error(JSON.stringify(results));
-    }
-    message.success('已保存');
-    setTimeout(() => {
-      window.location = SCHEMA_CONST.HREF.LIST;
-    }, 1000);
-  };
 
   render() {
     return (
@@ -138,7 +112,7 @@ class NewSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN}>模板</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item>添加</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
@@ -168,6 +142,41 @@ class NewSchemaPage extends Component {
       </Layout>
     )
   }
+
+  handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleOwlChange = (owl) => {
+    this.setState({owl});
+  };
+
+  handleSave = async () => {
+    const { owl, sname, gid } = this.state;
+    if (owl === undefined) {
+      return message.info('请添加类');
+    };
+    if (sname === "") {
+      return message.info("请输入模板名");
+    }
+    const response = await schemaService.newSchema(gid, owl, "JSON-LD", sname);
+    if (!response.ok) {
+      return message.error(JSON.stringify(response));
+    }
+    const results = await response.json();
+    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
+      return message.error(JSON.stringify(results));
+    }
+    message.success('已保存');
+    setTimeout(() => {
+      window.location = SCHEMA_CONST.HREF.LIST + window.location.search;
+    }, 1000);
+  };
 }
 
 export default NewSchemaPage;

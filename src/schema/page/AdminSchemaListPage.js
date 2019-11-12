@@ -32,29 +32,30 @@ class SchemaInfoTabel extends Component {
   };
 
   renderAction = (text, record) => {
-    if (['0', '1', '3', '4'].includes(record.status)) {
+    const { sname, sid, gid, status } = record;
+    if (['0', '1', '3', '4'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${record.sname}&sid=${record.sid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
         </span>
       )
     }
-    else if (['2'].includes(record.status)) {
+    else if (['2'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/admin/verify?sname=${record.sname}&sid=${record.sid}`}>审核</a>
+          <a href={`/schema/admin/verify?sname=${sname}&sid=${sid}&gid=${gid}`}>审核</a>
         </span>
       )
     }
-    else if (['5'].includes(record.status)) {
+    else if (['5'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${record.sname}&sid=${record.sid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
         </span>
       )
     }
     else {
-      message.error(`record.status = ${record.status}`);
+      message.error(`status = ${status}`);
     }
   };
 
@@ -178,30 +179,6 @@ class AdminSchemaListPage extends Component {
     this.setSchemaInfoData();
   };
 
-  setSchemaInfoData = async () => {
-    const response = await adminSchemaService.getSchemaInfo();
-    if (!response.ok) {
-      message.error(JSON.stringify(response))
-      return;
-    }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      message.error(JSON.stringify(results));
-      return;
-    }
-    const schemaInfoData = results.data.map((val, idx) => {
-      return {
-        key: `schemaInfoTableDataKey${idx}`,
-        uid: val.uid,
-        sid: val.sid,
-        sname: val.sname,
-        status: val.status + '',
-        updated: new Date(val.updated),
-        action: val.status,
-      }
-    });
-    this.setState({ schemaInfoData });
-  };
 
   render() {
 
@@ -225,6 +202,32 @@ class AdminSchemaListPage extends Component {
       </Layout>
     )
   }
+
+  setSchemaInfoData = async () => {
+    const response = await adminSchemaService.getSchemaInfo();
+    if (!response.ok) {
+      message.error(JSON.stringify(response));
+      return;
+    }
+    const results = await response.json();
+    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
+      message.error(JSON.stringify(results));
+      return;
+    }
+    const schemaInfoData = results.data.map((val, idx) => {
+      return {
+        key: `schemaInfoTableDataKey${idx}`,
+        uid: val.uid,
+        gid: val.gid,
+        sid: val.sid,
+        sname: val.sname,
+        status: val.status + '',
+        updated: new Date(val.updated),
+        action: val.status,
+      }
+    });
+    this.setState({ schemaInfoData });
+  };
 }
 
 export default AdminSchemaListPage;

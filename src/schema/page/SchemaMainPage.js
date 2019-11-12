@@ -5,20 +5,23 @@ import commonStyles from '../../common/css/common.module.scss';
 import SCHEMA_CONST from '../constant/SchemaConstant';
 import CommonProductCard from '../../common/component/ProductCard';
 import { withRouter } from 'react-router-dom';
+import commonUtil from "../../common/utils/commonUtil";
+import querystring from "querystring";
 
 const { Content } = Layout;
 
 class SchemaMainPage extends Component {
 
   render() {
+    let search = window.location.search;
     const listSchemaCardData = {
-      href: SCHEMA_CONST.HREF.LIST,
+      href: SCHEMA_CONST.HREF.LIST + search,
       imgSrc: "/images/menu.png",
       title: "列表",
       desc: "查看服务资源模板列表",
     };
     const newSchemaCardData = {
-      href: SCHEMA_CONST.HREF.NEW,
+      href: SCHEMA_CONST.HREF.NEW + search,
       imgSrc: "/images/plus.png",
       title: "新建",
       desc: "新建服务资源模板",
