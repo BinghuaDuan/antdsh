@@ -25,7 +25,7 @@ yarn start  # 运行app
 修改
 
 - env
-- app.config.prod.defaultServer.host (对应 [sh4j](https://github.com/Beim/sh4j) 配置的server.port)
+- app.config.prod.defaultServer.host (对应 [sh4j](https://github.com/Beim/sh4j) 的ip 和server.port)
 
 ```javascript
 const env = 'prod';
