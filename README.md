@@ -1,3 +1,52 @@
+# antdsh
+
+
+
+**环境要求**
+
+- nodejs
+
+
+
+**运行**
+
+```bash
+npm install -g yarn # 安装yarn
+yarn  # 安装依赖
+yarn start  # 运行app
+```
+
+
+
+**配置**
+
+修改配置文件`src/appconfig.js`
+
+修改
+
+- env
+- app.config.prod.defaultServer.host (对应 [sh4j](https://github.com/Beim/sh4j) 配置的server.port)
+
+```javascript
+const env = 'prod';
+
+app.config.prod = {
+  defaultServer: {
+    host: 'http://localhost:18080',
+  }
+}
+```
+
+
+
+
+
+---
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
