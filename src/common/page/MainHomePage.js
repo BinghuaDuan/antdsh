@@ -105,7 +105,7 @@ class MainHomePage extends Component {
       let gspaceName = gspaceInfo['name'];
       let item = {
         cid: idx + 1,
-        label: `图空间/${gspaceId}/${gspaceName}`,
+        label: `图空间/${gspaceName}`,
         products: [
           {
             pid: 1,
@@ -116,7 +116,7 @@ class MainHomePage extends Component {
           },
           {
             pid: 2,
-            href: 'http://39.106.69.57:7474/browser/',
+            href: 'http://119.29.160.85:32861/browser/',
             imgSrc: "/images/M.png",
             title: '资源',
             desc: '服务资源浏览',
