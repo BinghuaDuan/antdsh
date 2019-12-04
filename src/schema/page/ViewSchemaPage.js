@@ -37,7 +37,6 @@ class ViewSchemaPage extends Component {
   }
 
   render() {
-    console.log(this.state.schemaJson);
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
@@ -96,9 +95,6 @@ class ViewSchemaPage extends Component {
       let previewJsonObj = {"label": className};
       previewJsonData.push(previewJsonObj);
       let classObj = schemaJson[classNameUri];
-      console.log(classObj);
-      console.log(OWL_CONST.KEYS.DATATYPE_PROPERTY in classObj);
-      console.log(OWL_CONST.KEYS.OBJECT_PROPERTY in classObj);
       if (OWL_CONST.KEYS.DATATYPE_PROPERTY in classObj) {
         for (let propUri in classObj[OWL_CONST.KEYS.DATATYPE_PROPERTY]) {
           let prop = propUri.slice(1);

@@ -344,7 +344,9 @@ class SchemaTree extends Component {
     owl[KEYS.GRAPH].forEach((item, idx) => {
       if (item[KEYS.TYPE] === TYPES.CLASS) {
         const relativeUri = retrieveRelativeUri(item[KEYS.ID]);
-        schemaJson[relativeUri] = {};
+        if (!(relativeUri in schemaJson)) {
+          schemaJson[relativeUri] = {};
+        }
         if (KEYS.SUB_CLASS_OF in item) {
           schemaJson[relativeUri][KEYS.SUB_CLASS_OF] = retrieveValuesFromStrOrArr(item, KEYS.SUB_CLASS_OF, true);
         }
