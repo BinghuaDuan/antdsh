@@ -28,7 +28,7 @@ class MenuHeader extends Component {
               onClick={this.handleClickMenu}
             >
               <Menu.Item key="1">Sh V1.1</Menu.Item>
-              {/*<Menu.Item key="2">模板</Menu.Item>*/}
+              {/*<Menu.Item key="2">模式</Menu.Item>*/}
               {/*<Menu.Item key="3">资源</Menu.Item>*/}
             </Menu>
           </Col>

@@ -18,26 +18,26 @@ class SchemaMainPage extends Component {
       href: SCHEMA_CONST.HREF.LIST + search,
       imgSrc: "/images/menu.png",
       title: "列表",
-      desc: "查看服务资源模板列表",
+      desc: "查看模式列表",
     };
     const newSchemaCardData = {
       href: SCHEMA_CONST.HREF.NEW + search,
       imgSrc: "/images/plus.png",
       title: "新建",
-      desc: "新建服务资源模板",
+      desc: "新建模式",
     };
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>模板</Breadcrumb.Item>
+            <Breadcrumb.Item>模式</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>服务资源模板</div>
+                  <div className={commonStyles.cardTitle}>模式</div>
                   <div>
                     <CommonProductCard data={listSchemaCardData} />
                     <CommonProductCard data={newSchemaCardData} />
