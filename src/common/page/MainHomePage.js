@@ -130,14 +130,14 @@ class MainHomePage extends Component {
           },
           {
             pid: 3,
-            href: '/main/detail/1',
+            href: null,
             imgSrc: "/images/T.png",
             title: '训练',
             desc: '训练embedding',
           },
           {
             pid: 4,
-            href: null,
+            href: '/main/detail/1',
             onClick: null,
             imgSrc: "/images/T.png",
             title: '待定',
@@ -171,7 +171,7 @@ class MainHomePage extends Component {
   renderNewGspaceModal = () => {
     return (
       <Modal
-        title={"申请图空间"}
+        title={"申请图空间(最多可申请3个图空间)"}
         visible={this.state.newGspaceModalVisible}
         onOk={this.handleNewGspaceModalOk}
         onCancel={this.handleNewGspaceModalCancle}
