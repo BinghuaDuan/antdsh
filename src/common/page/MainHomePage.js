@@ -92,7 +92,7 @@ class MainHomePage extends Component {
    * @returns {Promise<[]|Array>}
    */
   renderHomeData = async () => {
-    const response = await mainPageService.getGspaceInfo();
+    let response = await mainPageService.getGspaceInfo();
     if (!response.succ) {
       message.info(JSON.stringify(response));
       return [];
@@ -103,6 +103,13 @@ class MainHomePage extends Component {
       let gspaceInfo = gspaceInfoList[idx];
       let gspaceId = gspaceInfo['id'];
       let gspaceName = gspaceInfo['name'];
+      response = await mainPageService.getGspaceNeoInfo(gspaceId);
+      if (!response.succ) {
+        message.info(JSON.stringify(response));
+        return [];
+      }
+      let gspaceNeoInfo = response.data;
+      let neoBrowserUrl = `http://${gspaceNeoInfo['host']}:${gspaceNeoInfo['httpPort']}/browser/`;
       let item = {
         cid: idx + 1,
         label: `图空间/${gspaceName}`,
@@ -116,7 +123,7 @@ class MainHomePage extends Component {
           },
           {
             pid: 2,
-            href: 'http://localhost:32771/browser/',
+            href: neoBrowserUrl,
             imgSrc: "/images/M.png",
             title: '资源',
             desc: '资源浏览',
@@ -125,8 +132,8 @@ class MainHomePage extends Component {
             pid: 3,
             href: '/main/detail/1',
             imgSrc: "/images/T.png",
-            title: '待定',
-            desc: '该模块将在后续扩展',
+            title: '训练',
+            desc: '训练embedding',
           },
           {
             pid: 4,

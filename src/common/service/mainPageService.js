@@ -42,6 +42,21 @@ mainPageService.getGspaceInfo = async () => {
   return await response.json();
 };
 
+mainPageService.getGspaceNeoInfo = async (gspaceid) => {
+  const response = await fetch(`${defaultUrlPrefix}/gspace/${gspaceid}/gspaceneo/info`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
+};
+
 mainPageService.productDetailData = async (pid) => {
   return {
     ok: true,
