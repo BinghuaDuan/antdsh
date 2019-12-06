@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Input, Tree, Button, Modal, message } from 'antd';
+import {Input, Tree, Button, Modal, message} from 'antd';
 import OWL_CONST from '../constant/OwlConstant';
-
+import editSchemaStyles from '../css/schemaTree.module.scss'
 
 const TreeNode = Tree.TreeNode;
 const KEYS = OWL_CONST.KEYS;
@@ -143,11 +143,12 @@ class SchemaTree extends Component {
    * @param rangeUri
    * @param propType "ObjectProperty" or "DatatypeProperty"
    * @param schemaJson
-   * @returns {null}
+   * @returns {boolean}
    */
   addPropRangeToSchemaJson = (domainUri, propUri, rangeUri, propType, schemaJson) => {
     if (propType === KEYS.OBJECT_PROPERTY && !(rangeUri in schemaJson)) {
-      return message.info(`请先添加类${rangeUri}`);
+      message.info(`请先添加类${rangeUri}`);
+      return false
     }
     const propObj = schemaJson[domainUri][propType][propUri];
     if (!('range' in propObj)) {
@@ -155,10 +156,12 @@ class SchemaTree extends Component {
     }
     else {
       if (propObj['range'].includes(rangeUri)) {
-        return message.info(`取值范围${rangeUri} 已存在`)
+        message.info(`取值范围${rangeUri} 已存在`)
+        return false;
       }
       propObj['range'].push(rangeUri);
     }
+    return true;
   };
   
   showNewDRangeModal = (newDRangeDomainUri, newDPropertyUri) => {
@@ -192,13 +195,14 @@ class SchemaTree extends Component {
       newObjectPropertyDomainUri,
       newObjectPropertyModalVisible: true,
       newObjectPropertyUri: '#',
+      newORangeUri: '#',
     });
   };
   handleNewObjectPropertyModalOk = (e) => {
-    const newObjectPropertyUri = this.state.newObjectPropertyUri;
-    const newObjectPropertyDomainUri = this.state.newObjectPropertyDomainUri;
+    const { newObjectPropertyUri, newObjectPropertyDomainUri, newORangeUri } = this.state;
     const schemaJson = this.state.schemaJson;
     this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson);
+    this.addPropRangeToSchemaJson(newObjectPropertyDomainUri, newObjectPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newObjectPropertyModalVisible: false,
@@ -216,13 +220,14 @@ class SchemaTree extends Component {
       newDatatypePropertyModalVisible: true,
       newDatatypePropertyDomainUri,
       newDatatypePropertyUri: '#',
+      newDRangeUri: 'xsd:',
     });
   };
   handleNewDatatypePropertyModalOk = (e) => {
-    const newDatatypePropertyUri = this.state.newDatatypePropertyUri;
-    const newDatatypePropertyDomainUri = this.state.newDatatypePropertyDomainUri;
+    const { newDatatypePropertyUri, newDatatypePropertyDomainUri, newDrangeUri } = this.state;
     const schemaJson = this.state.schemaJson;
     this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson);
+    this.addPropRangeToSchemaJson(newDatatypePropertyDomainUri, newDatatypePropertyUri, newDrangeUri, KEYS.DATATYPE_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newDatatypePropertyModalVisible: false,
@@ -235,10 +240,12 @@ class SchemaTree extends Component {
     })
   };
   /**
-   * propUri: datatypePropertyUri or objectPropertyUri
-   * domainUri: classUri
-   * propType: "DatatypeProperty" or "ObjectProperty",
-   * schemaJson: this.state.schemaJson
+   *
+   * @param propUri datatypePropertyUri or objectPropertyUri
+   * @param domainUri classUri
+   * @param propType "DatatypeProperty" or "ObjectProperty",
+   * @param schemaJson this.state.schemaJson
+   * @returns {boolean}
    */
   addPropertyToSchemaJson = (propUri, domainUri, propType, schemaJson) => {
     if (!(propType in schemaJson[domainUri])) {
@@ -248,10 +255,12 @@ class SchemaTree extends Component {
     }
     else {
       if (propUri in schemaJson[domainUri][propType]) {
-        return message.info(`属性${propUri} 已存在`);
+        message.info(`属性${propUri} 已存在`);
+        return false
       }
       schemaJson[domainUri][propType][propUri] = {};
     }
+    return true
   };
 
   showNewClassModal = () => {
@@ -711,8 +720,11 @@ class SchemaTree extends Component {
         onOk={this.handleNewDatatypePropertyModalOk}
         onCancel={this.handleNewDatatypePropertyModalCancle}
       >
-        <span>属性: </span>
+        <label className={editSchemaStyles.modalLabel}>属性</label>
         <Input value={this.state.newDatatypePropertyUri} name={"newDatatypePropertyUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
+        <br/><br/>
+        <label className={editSchemaStyles.modalLabel}>取值范围</label>
+        <Input value={this.state.newDRangeUri} name={"newDRangeUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
   };
@@ -724,8 +736,11 @@ class SchemaTree extends Component {
         onOk={this.handleNewObjectPropertyModalOk}
         onCancel={this.handleNewObjectPropertyModalCancle}
       >
-        <span>关系: </span>
+        <label className={editSchemaStyles.modalLabel}>关系</label>
         <Input value={this.state.newObjectPropertyUri} name={"newObjectPropertyUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
+        <br/><br/>
+        <label className={editSchemaStyles.modalLabel}>取值范围</label>
+        <Input value={this.state.newORangeUri} name={"newORangeUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
   };
