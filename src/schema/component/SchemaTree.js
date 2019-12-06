@@ -124,19 +124,7 @@ class SchemaTree extends Component {
     const newORangeDomainUri = this.state.newORangeDomainUri;
     const newOPropertyUri = this.state.newOPropertyUri;
     const newORangeUri = this.state.newORangeUri;
-    if (!(newORangeUri in schemaJson)) {
-      return message.info(`请先添加类${newORangeUri}`);
-    }
-    const propObj = schemaJson[newORangeDomainUri]['ObjectProperty'][newOPropertyUri];
-    if (!('range' in propObj)) {
-      propObj['range'] = [newORangeUri];
-    }
-    else {
-      if (propObj['range'].includes(newORangeUri)) {
-        return message.info(`取值范围${newORangeUri} 已存在`)
-      }
-      propObj['range'].push(newORangeUri);
-    }
+    this.addPropRangeToSchemaJson(newORangeDomainUri, newOPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newORangeModalVisible: false,
@@ -148,7 +136,31 @@ class SchemaTree extends Component {
       newORangeModalVisible: false,
     })
   };
-
+  /**
+   * 
+   * @param domainUri
+   * @param propUri
+   * @param rangeUri
+   * @param propType "ObjectProperty" or "DatatypeProperty"
+   * @param schemaJson
+   * @returns {null}
+   */
+  addPropRangeToSchemaJson = (domainUri, propUri, rangeUri, propType, schemaJson) => {
+    if (propType === KEYS.OBJECT_PROPERTY && !(rangeUri in schemaJson)) {
+      return message.info(`请先添加类${rangeUri}`);
+    }
+    const propObj = schemaJson[domainUri][propType][propUri];
+    if (!('range' in propObj)) {
+      propObj['range'] = [rangeUri];
+    }
+    else {
+      if (propObj['range'].includes(rangeUri)) {
+        return message.info(`取值范围${rangeUri} 已存在`)
+      }
+      propObj['range'].push(rangeUri);
+    }
+  };
+  
   showNewDRangeModal = (newDRangeDomainUri, newDPropertyUri) => {
     this.setState({
       newDRangeDomainUri,
@@ -162,16 +174,7 @@ class SchemaTree extends Component {
     const newDRangeDomainUri = this.state.newDRangeDomainUri;
     const newDPropertyUri = this.state.newDPropertyUri;
     const newDRangeUri = this.state.newDRangeUri;
-    const propObj = schemaJson[newDRangeDomainUri]['DatatypeProperty'][newDPropertyUri];
-    if (!('range' in propObj)) {
-      propObj['range'] = [newDRangeUri];
-    }
-    else {
-      if (propObj['range'].includes(newDRangeUri)) {
-        return message.info(`${newDRangeUri} 已存在`)
-      }
-      propObj['range'].push(newDRangeUri);
-    }
+    this.addPropRangeToSchemaJson(newDRangeDomainUri, newDPropertyUri, newDRangeUri, KEYS.DATATYPE_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newDRangeModalVisible: false,
@@ -195,17 +198,7 @@ class SchemaTree extends Component {
     const newObjectPropertyUri = this.state.newObjectPropertyUri;
     const newObjectPropertyDomainUri = this.state.newObjectPropertyDomainUri;
     const schemaJson = this.state.schemaJson;
-    if (!('ObjectProperty' in schemaJson[newObjectPropertyDomainUri])) {
-      schemaJson[newObjectPropertyDomainUri]['ObjectProperty'] = {
-        [newObjectPropertyUri]: {},
-      };
-    }
-    else {
-      if (newObjectPropertyUri in schemaJson[newObjectPropertyDomainUri]['ObjectProperty']) {
-        return message.info(`属性${newObjectPropertyUri} 已存在`);
-      }
-      schemaJson[newObjectPropertyDomainUri]['ObjectProperty'][newObjectPropertyUri] = {};
-    }
+    this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newObjectPropertyModalVisible: false,
@@ -229,17 +222,7 @@ class SchemaTree extends Component {
     const newDatatypePropertyUri = this.state.newDatatypePropertyUri;
     const newDatatypePropertyDomainUri = this.state.newDatatypePropertyDomainUri;
     const schemaJson = this.state.schemaJson;
-    if (!('DatatypeProperty' in schemaJson[newDatatypePropertyDomainUri])) {
-      schemaJson[newDatatypePropertyDomainUri]['DatatypeProperty'] = {
-        [newDatatypePropertyUri]: {},
-      };
-    }
-    else {
-      if (newDatatypePropertyUri in schemaJson[newDatatypePropertyDomainUri]['DatatypeProperty']) {
-        return message.info(`属性${newDatatypePropertyUri} 已存在`);
-      }
-      schemaJson[newDatatypePropertyDomainUri]['DatatypeProperty'][newDatatypePropertyUri] = {};
-    }
+    this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newDatatypePropertyModalVisible: false,
@@ -250,6 +233,25 @@ class SchemaTree extends Component {
     this.setState({
       newDatatypePropertyModalVisible: false,
     })
+  };
+  /**
+   * propUri: datatypePropertyUri or objectPropertyUri
+   * domainUri: classUri
+   * propType: "DatatypeProperty" or "ObjectProperty",
+   * schemaJson: this.state.schemaJson
+   */
+  addPropertyToSchemaJson = (propUri, domainUri, propType, schemaJson) => {
+    if (!(propType in schemaJson[domainUri])) {
+      schemaJson[domainUri][propType] = {
+        [propUri]: {},
+      };
+    }
+    else {
+      if (propUri in schemaJson[domainUri][propType]) {
+        return message.info(`属性${propUri} 已存在`);
+      }
+      schemaJson[domainUri][propType][propUri] = {};
+    }
   };
 
   showNewClassModal = () => {
@@ -265,6 +267,9 @@ class SchemaTree extends Component {
       return message.info(`${newClassUri} 已存在`);
     }
     schemaJson[newClassUri] = {};
+    // 默认带有name: string 属性
+    this.addPropertyToSchemaJson("#name", newClassUri, KEYS.DATATYPE_PROPERTY, schemaJson);
+    this.addPropRangeToSchemaJson(newClassUri, "#name", "xsd:string", KEYS.DATATYPE_PROPERTY, schemaJson);
     this.setState({
       schemaJson,
       newClassModalVisible: false,
