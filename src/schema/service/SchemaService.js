@@ -42,7 +42,7 @@ SchemaService.newSchema = async (gid, owl, owlLang, sname) => {
   return response;
 };
 
-SchemaService.editSchema = async (owl, owlLang, sname) => {
+SchemaService.editSchema = async (gid, owl, owlLang, sname) => {
   const response = await fetch(`${defaultUrlPrefix}/schema/edit`, {
     method: 'POST',
     credentials: 'include',
@@ -50,6 +50,7 @@ SchemaService.editSchema = async (owl, owlLang, sname) => {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
+      gid,
       owl,
       owlLang,
       sname,

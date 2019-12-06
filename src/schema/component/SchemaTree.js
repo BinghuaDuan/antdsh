@@ -54,6 +54,12 @@ class SchemaTree extends Component {
       newORangeUri: '#', // objectProperty range uri
       newOPropertyUri: '#', // objectProperty uri
       newODomainuri: '#', // objectProperty domain uri
+
+      deleteItemModalVisible: false,
+      deleteItemType: '', // one of (class datatypeProperty objectProperty)
+      deleteClass: '', // class name
+      deleteDatatypeProperty: '', // datatypeProperty name
+      deleteObjectProperty: '', // objectProperty name
     };
   }
 
@@ -91,6 +97,7 @@ class SchemaTree extends Component {
         {this.renderNewObjectPropertyModal()}
         {this.renderNewDRangeModal()}
         {this.renderNewORangeModal()}
+        {this.renderDeleteItemModal()}
       </div>
     )
   }
@@ -308,6 +315,52 @@ class SchemaTree extends Component {
     });
   };
 
+  /*
+  args: {
+    type: '',
+    classUri: '',
+    datatypeProperty: '',
+    objectProperty: '',
+  }
+   */
+  showDeleteItemModal = (args) => {
+    this.setState({
+      deleteItemModalVisible: true,
+      deleteItemType: args['type'] || '',
+      deleteClass: args['classUri'] || '',
+      deleteDatatypeProperty: args['datatypeProperty'] || '',
+      deleteObjectProperty: args['objectProperty'] || '',
+    })
+  };
+  handleDeleteItemModalOk = (e) => {
+    let {schemaJson, deleteItemType, deleteClass, deleteDatatypeProperty, deleteObjectProperty} = this.state;
+    if (deleteItemType === 'class') {
+      delete schemaJson[deleteClass]
+    } else if (deleteItemType === 'datatypeProperty') {
+      delete schemaJson[deleteClass][KEYS.DATATYPE_PROPERTY][deleteDatatypeProperty]
+    } else if (deleteItemType === "objectProperty") {
+      delete schemaJson[deleteClass][KEYS.OBJECT_PROPERTY][deleteObjectProperty]
+    }
+    this.setState({
+      deleteItemModalVisible: false,
+      schemaJson,
+      deleteItemType: '',
+      deleteClass: '',
+      deleteDatatypeProperty: '',
+      deleteObjectProperty: '',
+    })
+    this.props.submitOwl(this.transJsonToOwl(schemaJson));
+  };
+  handleDeleteItemModalCancle = (e) => {
+    this.setState({
+      deleteItemModalVisible: false,
+      deleteItemType: '',
+      deleteClass: '',
+      deleteDatatypeProperty: '',
+      deleteObjectProperty: '',
+    })
+  };
+
 
   transOwlToJson(owl) {
     const retrieveRelativeUri = (uri) => {
@@ -495,7 +548,12 @@ class SchemaTree extends Component {
   };
 
   renderClassTreeNode = (classUri, classItem) => {
-    const getSpan = (spanVal) => {
+    const getSpan = (spanVal, deleteItemArgs=null) => {
+      if (this.state.editBtnVisible && deleteItemArgs !== null) {
+        return (
+          <span onClick={this.showDeleteItemModal.bind(this, deleteItemArgs)}>{spanVal}</span>
+        )
+      }
       return (
         <span>{spanVal}</span>
       )
@@ -551,7 +609,13 @@ class SchemaTree extends Component {
       for (let propUri in propertyObj) {
         let propValues = propertyObj[propUri];
         propNodes.push(
-          <TreeNode title={getSpan(`属性: ${propUri}`)} key={`datatypeProperty${propUri}${classUri}`}>
+          <TreeNode
+            title={
+              getSpan(
+                `属性: ${propUri}`,
+                {'type': 'datatypeProperty', 'classUri': classUri, 'datatypeProperty': propUri})
+            }
+            key={`datatypeProperty${propUri}${classUri}`}>
             {renderPropRanges(propValues['range'])}
             {(() => this.state.editBtnVisible ? <TreeNode title={getDRangeBtn('添加取值范围', classUri, propUri)}></TreeNode> : null)()}
           </TreeNode>
@@ -565,7 +629,14 @@ class SchemaTree extends Component {
       for (let propUri in propertyObj) {
         let propValues = propertyObj[propUri];
         propNodes.push(
-          <TreeNode title={getSpan(`关系: ${propUri}`)} key={`objectProperty${propUri}${classUri}`}>
+          <TreeNode
+            title={
+              getSpan(
+                `关系: ${propUri}`,
+                {'type': 'objectProperty', 'classUri': classUri, 'objectProperty': propUri}
+              )
+            }
+            key={`objectProperty${propUri}${classUri}`}>
             {renderPropRanges(propValues['range'])}
             {(() => this.state.editBtnVisible ? <TreeNode title={getORangeBtn('添加取值范围', classUri, propUri)}></TreeNode> : null)()}
           </TreeNode>
@@ -574,9 +645,9 @@ class SchemaTree extends Component {
       return propNodes;
     };
     return (
-      <TreeNode title={getSpan(classUri)} key={`classTreeNode${classUri}`}>
-        {renderParentClasses(classItem['subClassOf'])}
-        {(() => this.state.editBtnVisible ? <TreeNode title={getNewSuperClassBtn('添加父类', classUri)}></TreeNode> : null)()}
+      <TreeNode title={getSpan(classUri, {'type': 'class', 'classUri': classUri})} key={`classTreeNode${classUri}`}>
+        {/*{renderParentClasses(classItem['subClassOf'])}*/}
+        {/*{(() => this.state.editBtnVisible ? <TreeNode title={getNewSuperClassBtn('添加父类', classUri)}></TreeNode> : null)()}*/}
 
         {renderDatatypeProperty(classItem['DatatypeProperty'], classUri)}
         {(() => this.state.editBtnVisible ? <TreeNode title={getNewDatatypePropertyBtn('添加属性', classUri)}></TreeNode> : null)()}
@@ -585,6 +656,19 @@ class SchemaTree extends Component {
         {(() => this.state.editBtnVisible ? <TreeNode title={getNewObjectPropertyBtn('添加关系', classUri)}></TreeNode> : null)()}
 
       </TreeNode>
+    )
+  };
+
+  renderDeleteItemModal = () => {
+    return (
+      <Modal
+        title={"删除节点"}
+        visible={this.state.deleteItemModalVisible}
+        onOk={this.handleDeleteItemModalOk}
+        onCancel={this.handleDeleteItemModalCancle}
+      >
+        <span>确认删除节点？</span>
+      </Modal>
     )
   };
 

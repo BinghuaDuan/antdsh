@@ -48,12 +48,12 @@ class EditSchemaPage extends Component {
   };
 
   handleSave = async () => {
-    const owl = this.state.owl;
-    const sname = this.state.sname;
+    const {owl, sname, gid} = this.state;
+    console.log('owl: ', owl);
     if (owl === undefined) {
       return message.info('请添加类');
     };
-    const response = await schemaService.editSchema(owl, "JSON-LD", sname);
+    const response = await schemaService.editSchema(gid, owl, "JSON-LD", sname);
     if (!response.ok) {
       return message.error(JSON.stringify(response));
     }
@@ -62,9 +62,10 @@ class EditSchemaPage extends Component {
       return message.error(JSON.stringify(results));
     }
     message.success('已保存');
-    setTimeout(() => {
-      window.location = SCHEMA_CONST.HREF.LIST;
-    }, 1000);
+    // 跳转list 页面
+    // setTimeout(() => {
+    //   window.location = SCHEMA_CONST.HREF.LIST + window.location.search;
+    // }, 1000);
   };
 
   render() {
