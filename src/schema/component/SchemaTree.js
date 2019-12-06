@@ -121,10 +121,14 @@ class SchemaTree extends Component {
   };
   handleNewORangeModalOk = (e) => {
     const schemaJson = this.state.schemaJson;
-    const newORangeDomainUri = this.state.newORangeDomainUri;
-    const newOPropertyUri = this.state.newOPropertyUri;
-    const newORangeUri = this.state.newORangeUri;
-    this.addPropRangeToSchemaJson(newORangeDomainUri, newOPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson);
+    const newORangeDomainUri = this.state.newORangeDomainUri ? this.state.newORangeDomainUri.trim() : '#';
+    const newOPropertyUri = this.state.newOPropertyUri ? this.state.newOPropertyUri.trim() : '#';
+    const newORangeUri = this.state.newORangeUri ? this.state.newORangeUri.trim() : '#';
+    if (newORangeDomainUri === '#' || newOPropertyUri === '#' || newORangeUri === '#') {
+      return message.info('值不能为空')
+    }
+    if (!this.addPropRangeToSchemaJson(newORangeDomainUri, newOPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson))
+      return;
     this.setState({
       schemaJson,
       newORangeModalVisible: false,
@@ -174,10 +178,14 @@ class SchemaTree extends Component {
   };
   handleNewDRangeModalOk = (e) => {
     const schemaJson = this.state.schemaJson;
-    const newDRangeDomainUri = this.state.newDRangeDomainUri;
-    const newDPropertyUri = this.state.newDPropertyUri;
-    const newDRangeUri = this.state.newDRangeUri;
-    this.addPropRangeToSchemaJson(newDRangeDomainUri, newDPropertyUri, newDRangeUri, KEYS.DATATYPE_PROPERTY, schemaJson);
+    const newDRangeDomainUri = this.state.newDRangeDomainUri ? this.state.newDRangeDomainUri.trim() : '#';
+    const newDPropertyUri = this.state.newDPropertyUri ? this.state.newDPropertyUri.trim() : '#';
+    const newDRangeUri = this.state.newDRangeUri ? this.state.newDRangeUri.trim() : 'xsd:';
+    if (newDRangeDomainUri === '#' || newDPropertyUri === '#' || newDRangeUri === 'xsd:') {
+      return message.info('值不能为空')
+    }
+    if (!this.addPropRangeToSchemaJson(newDRangeDomainUri, newDPropertyUri, newDRangeUri, KEYS.DATATYPE_PROPERTY, schemaJson))
+      return;
     this.setState({
       schemaJson,
       newDRangeModalVisible: false,
@@ -199,10 +207,17 @@ class SchemaTree extends Component {
     });
   };
   handleNewObjectPropertyModalOk = (e) => {
-    const { newObjectPropertyUri, newObjectPropertyDomainUri, newORangeUri } = this.state;
-    const schemaJson = this.state.schemaJson;
-    this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson);
-    this.addPropRangeToSchemaJson(newObjectPropertyDomainUri, newObjectPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson);
+    const newObjectPropertyUri = this.state.newObjectPropertyUri ? this.state.newObjectPropertyUri.trim() : '#';
+    const newObjectPropertyDomainUri = this.state.newObjectPropertyDomainUri ? this.state.newObjectPropertyDomainUri.trim() : '#';
+    const newORangeUri = this.state.newORangeUri ? this.state.newORangeUri.trim() : '#';
+    const schemaJson = JSON.parse(JSON.stringify(this.state.schemaJson));
+    if (newObjectPropertyUri === '#' || newObjectPropertyDomainUri === '#' || newORangeUri === '#') {
+      return message.info('值不能为空')
+    }
+    if (!this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson))
+      return;
+    if (!this.addPropRangeToSchemaJson(newObjectPropertyDomainUri, newObjectPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson))
+      return;
     this.setState({
       schemaJson,
       newObjectPropertyModalVisible: false,
@@ -224,10 +239,17 @@ class SchemaTree extends Component {
     });
   };
   handleNewDatatypePropertyModalOk = (e) => {
-    const { newDatatypePropertyUri, newDatatypePropertyDomainUri, newDrangeUri } = this.state;
-    const schemaJson = this.state.schemaJson;
-    this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson);
-    this.addPropRangeToSchemaJson(newDatatypePropertyDomainUri, newDatatypePropertyUri, newDrangeUri, KEYS.DATATYPE_PROPERTY, schemaJson);
+    const newDatatypePropertyUri = this.state.newDatatypePropertyUri ? this.state.newDatatypePropertyUri.trim() : "#";
+    const newDatatypePropertyDomainUri = this.state.newDatatypePropertyDomainUri ? this.state.newDatatypePropertyDomainUri.trim() : "#";
+    const newDRangeUri = this.state.newDRangeUri ? this.state.newDRangeUri.trim() : 'xsd:';
+    const schemaJson = JSON.parse(JSON.stringify(this.state.schemaJson));
+    if (newDatatypePropertyUri === '#' || newDatatypePropertyDomainUri === '#' || newDRangeUri === 'xsd:') {
+      return message.info('值不能为空')
+    }
+    if (!this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson))
+      return;
+    if (!this.addPropRangeToSchemaJson(newDatatypePropertyDomainUri, newDatatypePropertyUri, newDRangeUri, KEYS.DATATYPE_PROPERTY, schemaJson))
+      return;
     this.setState({
       schemaJson,
       newDatatypePropertyModalVisible: false,
@@ -256,7 +278,7 @@ class SchemaTree extends Component {
     else {
       if (propUri in schemaJson[domainUri][propType]) {
         message.info(`属性${propUri} 已存在`);
-        return false
+        return false;
       }
       schemaJson[domainUri][propType][propUri] = {};
     }
@@ -271,7 +293,10 @@ class SchemaTree extends Component {
   };
   handleNewClassModalOk = (e) => {
     const schemaJson = this.state.schemaJson;
-    const newClassUri = this.state.newClassUri;
+    const newClassUri = this.state.newClassUri ? this.state.newClassUri.trim() : '#';
+    if (newClassUri === '#') {
+      return message.info('值不能为空')
+    }
     if (newClassUri in schemaJson) {
       return message.info(`${newClassUri} 已存在`);
     }
