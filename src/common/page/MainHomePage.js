@@ -130,10 +130,10 @@ class MainHomePage extends Component {
           },
           {
             pid: 3,
-            href: null,
+            href: `/embedding?gid=${gspaceId}`,
             imgSrc: "/images/T.png",
-            title: '训练',
-            desc: '训练embedding',
+            title: '图嵌入',
+            desc: '训练图嵌入模型',
           },
           {
             pid: 4,

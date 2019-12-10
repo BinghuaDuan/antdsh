@@ -6,6 +6,7 @@ import UserRouter from '../../user/router/UserRouter';
 import SchemaRouter from '../../schema/router/SchemaRouter';
 import AppRecommendRouter from '../../apprecommend/router/AppRecommendRouter';
 import MultiviewRouter from '../../multiview/router/MultiviewRouter';
+import EmbeddingRouter from "../../embedding/router/EmbeddingRouter";
 
 class AppRouter extends Component {
   render() {
@@ -20,6 +21,7 @@ class AppRouter extends Component {
             <Route path="/schema" component={SchemaRouter} />
             <Route path="/app" component={AppRecommendRouter} />
             <Route path="/multiview" component={MultiviewRouter} />
+            <Route path="/embedding" component={EmbeddingRouter} />
           </Switch>
         </div>
       </Router>
