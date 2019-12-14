@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {Layout, Breadcrumb, message, Row, Col, Table, Spin, Modal} from 'antd';
+import {Layout, Breadcrumb, message, Table, Spin, Modal} from 'antd';
 
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
-import RESULT from '../../common/constant/Result';
-import APP_CONFIG from '../../appconfig';
 import commonUtil from "../../common/utils/commonUtil";
 import embeddingService from "../service/EmbeddingService";
-import mainPageService from "../../common/service/mainPageService";
 import { STATUS } from '../constant/EmbeddingConstant';
 import appconfig from '../../appconfig';
 
@@ -66,6 +63,8 @@ class EmbeddingListTable extends Component {
           <a onClick={this.showApiModal.bind(this, gid, modelname)}>查看接口</a>
           <span> | </span>
           <a onClick={this.postTrainJob.bind(this, gid, modelname)}>重新训练</a>
+          <span> | </span>
+          <a onClick={this.exportParam.bind(this, gid, modelname)}>导出参数</a>
         </span>
       )
     } else if (status === STATUS.training) {
@@ -83,6 +82,22 @@ class EmbeddingListTable extends Component {
     } else if (status === STATUS.queued) {
       // TODO 训练队列中，可取消训练
     }
+  };
+
+  exportParam = async (gid, modelname) => {
+    const response = await embeddingService.getAvailableModelsParamByGid(gid, modelname);
+    if (!response.succ) {
+      message.error(JSON.stringify(response));
+      return;
+    }
+    const data = response.data[0];
+    let params = data['params'];
+    let entity2id = data['entity2id'];
+    let relation2id = data['relation2id'];
+    let updated = new Date(data['updated']).getTime();
+    commonUtil.download(params, `${gid}_${modelname}_${updated}_params.json`);
+    commonUtil.download(entity2id, `${gid}_${modelname}_${updated}_entity2id.txt`);
+    commonUtil.download(relation2id, `${gid}_${modelname}_${updated}_relation2id.txt`);
   };
 
   postTrainJob = async (gid, modelname) => {
@@ -120,17 +135,17 @@ class EmbeddingListTable extends Component {
         onOk={this.handleApiModalCancle}
         onCancel={this.handleApiModalCancle}
       >
-        <div>{`预测头实体 [GET] ${defaultUrlPrefix}/gspace/${apiGid}/model/${apiModelname}/predict/head/{tailId}/{relType}/{topk}`}</div>
+        <div>{`预测头实体 [GET] ${defaultUrlPrefix}/embed/predict/head?gid=&modelName=&tailId=&relType=&topk=`}</div>
         <br/>
-        <div>{`预测尾实体 [GET] ${defaultUrlPrefix}/gspace/${apiGid}/model/${apiModelname}/predict/tail/{headId}/{relType}/{topk}`}</div>
+        <div>{`预测尾实体 [GET] ${defaultUrlPrefix}/embed/predict/tail?gid=&modelName=&headId=&relType=&topk=`}</div>
         <br/>
-        <div>{`预测关系 [GET] ${defaultUrlPrefix}/gspace/${apiGid}/model/${apiModelname}/predict/rel/{headId}/{tailId}/{topk}`}</div>
+        <div>{`预测关系 [GET] ${defaultUrlPrefix}/embed/predict/relation?gid=&modelName=&headId=&tailId=&topk=`}</div>
         <br/>
-        <div>{`预测三元组 [GET] ${defaultUrlPrefix}/gspace/${apiGid}/model/${apiModelname}/predict/triple/{headId}/{tailId}/{relType}/{thresh}`}</div>
+        <div>{`预测三元组 [GET] ${defaultUrlPrefix}/embed/predict/triple?gid=&modelName=&headId=&tailId=&relation=&thresh=`}</div>
         <br/>
-        <div>{`获取实体嵌入 [GET] ${defaultUrlPrefix}/gspace/${apiGid}/model/${apiModelname}/entity/{entId}/embedding`}</div>
+        <div>{`获取实体嵌入 [GET] ${defaultUrlPrefix}/embed/entity/embedding?gid=&modelName=&entId=`}</div>
         <br/>
-        <div>{`获取关系嵌入 [GET] ${defaultUrlPrefix}/gspace/${apiGid}/model/${apiModelname}/relation/{relType}/embedding`}</div>
+        <div>{`获取关系嵌入 [GET] ${defaultUrlPrefix}/embed/relation/embedding?gid=&modelName=&relType=`}</div>
       </Modal>
     )
   };
