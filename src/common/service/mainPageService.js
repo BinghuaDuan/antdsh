@@ -43,7 +43,7 @@ mainPageService.getGspaceInfo = async () => {
 };
 
 mainPageService.getGspaceNeoInfo = async (gspaceid) => {
-  const response = await fetch(`${defaultUrlPrefix}/gspace/${gspaceid}/gspaceneo/info`, {
+  const response = await fetch(`${defaultUrlPrefix}/gspace/gspaceneo/info?gspaceid=${gspaceid}`, {
     method: 'GET',
     credentials: 'include',
   });
