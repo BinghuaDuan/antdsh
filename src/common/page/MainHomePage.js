@@ -109,7 +109,7 @@ class MainHomePage extends Component {
         return [];
       }
       let gspaceNeoInfo = response.data;
-      let neoBrowserUrl = `http://${gspaceNeoInfo['host']}:${gspaceNeoInfo['httpPort']}/browser/`;
+      let neoBrowserUrl = `http://${gspaceNeoInfo['host']}:${gspaceNeoInfo['httpPort']}/browser/#boltport=${gspaceNeoInfo['boltPort']}`;
       let item = {
         cid: idx + 1,
         label: `图空间/${gspaceName}`,
