@@ -75,6 +75,7 @@ class UserInfoBox extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       if (results.code === CODES.UNAUTHEN) {
         console.info('用户未登录');
+        window.location.href = '/user/login';
       }
       else {
         message.error(JSON.stringify(results));
